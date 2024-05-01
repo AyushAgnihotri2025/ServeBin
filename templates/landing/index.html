@@ -1,0 +1,188 @@
+<!-- Copyright 2024 The ServeBin AUTHORS. All rights reserved. -->
+<!-- -->
+<!-- Use of this source code is governed by a BSD-style -->
+<!-- license that can be found in the LICENSE file. -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{.Title}} | Home</title>
+    <link href="https://cdn.mrayush.me/ServeBin/favicon.ico" id="favicon" rel="shortcut icon"/>
+    <meta charSet="utf-8"/>
+    <meta content="Welcome to ServeBin! ServeBin is a cutting-edge HTTP testing and debugging tool, built with the latest technologies in Go. This documentation provides comprehensive details about the endpoints, parameters, and responses offered by ServeBin, empowering developers to streamline their testing workflows and ensure the reliability of their applications. Explore the various features and capabilities of ServeBin API to optimize your development process and elevate your HTTP testing experience."
+          name="description"/>
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport">
+    <link href="https://fonts.googleapis.com/css?family=Poppins:700" rel="stylesheet"/>
+    <link crossorigin="anonymous" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+          integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css?family=Muli" rel="stylesheet"/>
+    <script>document.addEventListener("touchstart", function () {
+    }, true);</script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css" rel="stylesheet"/>
+    <style>
+        @font-face {
+            font-family: bootstrap-icons;
+            src: url("https://cdn.mrayush.me/css/bootstrap-icons/bootstrap-icons.woff2")
+        }
+
+        /* Dark theme colors */
+
+        /* Primary theme colors */
+        body[data-theme="light_theme"] {
+            --white: #fff;
+            --bg-color: #F8F8F8;
+            --color: #333;
+            --secondary-color: #ff7f57;
+            --icon-bg-color: #333;
+            --icon-color: #333;
+        }
+
+        body {
+            background: var(--bg-color);
+            color: var(--color);
+            text-align: center;
+        }
+
+        body[data-theme="dark_theme"] {
+            --white: #fff;
+            --bg-color: #000;
+            --color: #fff;
+            --secondary-color: #ff7f57;
+            --icon-bg-color: #333;
+            --icon-color: #fff;
+        }
+
+        @keyframes fadeIn {
+            from {
+                top: 20%;
+                opacity: 0;
+            }
+            to {
+                top: 100;
+                opacity: 1;
+            }
+        }
+
+        @-webkit-keyframes fadeIn {
+            from {
+                top: 20%;
+                opacity: 0;
+            }
+            to {
+                top: 100;
+                opacity: 1;
+            }
+        }
+
+        .wrapper {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            -webkit-transform: translate(-50%, -50%);
+            animation: fadeIn 1000ms ease;
+            -webkit-animation: fadeIn 1000ms ease;
+
+        }
+
+        h1 {
+            font-size: 64px;
+            font-family: "Poppins", sans-serif;
+            margin-bottom: 0;
+            line-height: 1;
+            font-weight: 700;
+        }
+
+        .dot {
+            color: var(--secondary-color);
+        }
+
+        p {
+            text-align: center;
+            margin: 18px;
+            font-family: "Muli", sans-serif;
+            font-weight: normal;
+        }
+
+        .icons {
+            text-align: center;
+            display: flex;
+            justify-content: center;
+        }
+
+        .icons i {
+            color: var(--white);
+            background: var(--icon-bg-color);
+            height: 15px;
+            width: 15px;
+            padding: 13px;
+            margin: 0 10px;
+            border-radius: 50px;
+            border: 2px solid transparent;
+            transition: all 200ms ease;
+            text-decoration: none;
+            position: relative;
+        }
+
+        .icons i.bi-twitter-x {
+            display: inline-block;
+            font: normal normal normal 14px/1 bootstrap-icons;
+            font-size: inherit;
+            text-rendering: auto;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale
+
+        }
+
+        .icons i.bi-twitter-x:before {
+            content: "\f8db";
+        }
+
+        .icons i:hover, .icons i:active {
+            color: var(--icon-color);
+            background: none;
+            border-color: var(--icon-bg-color);
+            cursor: pointer !important;
+            transform: scale(1.2);
+            -webkit-transform: scale(1.2);
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body data-theme="light_theme">
+<div class="wrapper">
+    <h1>{{.Title}}<span class="dot">.</span>
+        <div style="font-size: 15px;"><span class="dot">v</span>{{.Version}}</div>
+    </h1>
+    <p>Elevating HTTP Testing to Effortless Debugging.</p>
+    <div class="icons">
+        <a href="https://github.com/AyushAgnihotri2025/ServeBin" target="_blank"><i class="fa fa-github"></i></a>
+        <a href="https://x.com/AyushAgni2025" target="_blank"><i class="bi bi-twitter-x"></i></a>
+        <a href="https://linkedin.com/in/AyushAgnihotri2025" target="_blank"><i class="fa fa-linkedin"></i></a>
+        <a href="/docs"><i class="fa fa-book"></i></a>
+    </div>
+</div>
+<script>
+    function setThemePreference() {
+        var d = new Date();
+        /*
+        * The getHours() method returns the hour (from 0 to 23) of the specified date and time.
+        * Early morning = 0 - 6
+        * Morning = 6 - 12
+        * Evening = 12 - 18
+        * Night = 18 - 23
+        */
+        var currentHour = d.getHours();
+
+        if (currentHour >= 19 || currentHour <= 6) {
+            document.body.setAttribute("data-theme", "dark_theme")
+        } else {
+            document.body.setAttribute("data-theme", "light_theme")
+        }
+    }
+
+    window.onload = setThemePreference;
+</script>
+</body>
+</html>

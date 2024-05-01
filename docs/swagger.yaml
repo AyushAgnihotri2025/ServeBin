@@ -1,0 +1,236 @@
+openapi: 3.0.3
+info:
+  title: ServeBin
+  description: "Welcome to ServeBin API documentation! ServeBin is a cutting-edge\
+    \ HTTP testing and debugging tool, built with the latest technologies in Go. This\
+    \ documentation provides comprehensive details about the endpoints, parameters,\
+    \ and responses offered by ServeBin, empowering developers to streamline their\
+    \ testing workflows and ensure the reliability of their applications. Explore\
+    \ the various features and capabilities of ServeBin API to optimize your development\
+    \ process and elevate your HTTP testing experience."
+  termsOfService: https://servebin.dev/
+  contact:
+    email: contact@servebin.dev
+  license:
+    name: BSD-3-Clause
+    url: https://github.com/AyushAgnihotri2025/ServeBin/blob/master/LICENSE
+  version: v1.0.0
+servers:
+  - url: https://servebin.dev/
+  - url: https://s1.servebin.dev/
+  - url: https://s2.servebin.dev/
+tags:
+  - name: Status Codes
+    description: Generates responses with given status code
+  - name: Request inspection
+    description: Inspect the request data
+paths:
+  /headers:
+    get:
+      tags:
+        - Request inspection
+      summary: Return the incoming request's HTTP headers.
+      description: It returns the incoming request's HTTP headers.
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/response.HeaderResponse'
+  /ip:
+    get:
+      tags:
+        - Request inspection
+      summary: Get Request IP.
+      description: Returns the requester's IP Address.
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/response.IPResponse'
+  /status/{statuscode}:
+    get:
+      tags:
+        - Status Codes
+      summary: Return status code or random status code if more than one are given.
+      description: Returns the requester's IP Address.
+      parameters:
+        - name: statuscode
+          in: path
+          description: Status Code
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: OK
+          content: { }
+        "400":
+          description: Bad Request
+          content: { }
+        "404":
+          description: Not Found
+          content: { }
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/response.HTTPError'
+    put:
+      tags:
+        - Status Codes
+      summary: Return status code or random status code if more than one are given.
+      description: Returns the requester's IP Address.
+      parameters:
+        - name: statuscode
+          in: path
+          description: Status Code
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: OK
+          content: { }
+        "400":
+          description: Bad Request
+          content: { }
+        "404":
+          description: Not Found
+          content: { }
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/response.HTTPError'
+    post:
+      tags:
+        - Status Codes
+      summary: Return status code or random status code if more than one are given.
+      description: Returns the requester's IP Address.
+      parameters:
+        - name: statuscode
+          in: path
+          description: Status Code
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: OK
+          content: { }
+        "400":
+          description: Bad Request
+          content: { }
+        "404":
+          description: Not Found
+          content: { }
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/response.HTTPError'
+    delete:
+      tags:
+        - Status Codes
+      summary: Return status code or random status code if more than one are given.
+      description: Returns the requester's IP Address.
+      parameters:
+        - name: statuscode
+          in: path
+          description: Status Code
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: OK
+          content: { }
+        "400":
+          description: Bad Request
+          content: { }
+        "404":
+          description: Not Found
+          content: { }
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/response.HTTPError'
+    patch:
+      tags:
+        - Status Codes
+      summary: Return status code or random status code if more than one are given.
+      description: Returns the requester's IP Address.
+      parameters:
+        - name: statuscode
+          in: path
+          description: Status Code
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: OK
+          content: { }
+        "400":
+          description: Bad Request
+          content: { }
+        "404":
+          description: Not Found
+          content: { }
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/response.HTTPError'
+  /user-agent:
+    get:
+      tags:
+        - Request inspection
+      summary: Return the incoming request's User-Agent header.
+      description: User-Agent header.
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/response.UserAgentResponse'
+components:
+  schemas:
+    response.HTTPError:
+      type: object
+      properties:
+        code:
+          type: integer
+          example: 400
+        message:
+          type: string
+          example: status bad request
+    response.HeaderResponse:
+      type: object
+      properties:
+        headers:
+          type: object
+    response.IPResponse:
+      type: object
+      properties:
+        ip:
+          type: array
+          items:
+            type: object
+    response.UserAgentResponse:
+      type: object
+      properties:
+        user-agent:
+          type: string
+x-original-swagger-version: "2.0"
