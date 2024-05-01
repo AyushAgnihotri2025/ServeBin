@@ -8,6 +8,7 @@ package router
 import (
 	"ServeBin"
 	"ServeBin/controller"
+	"ServeBin/middleware"
 	"github.com/gin-gonic/gin"
 	swaggerFiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
@@ -17,6 +18,8 @@ import (
 
 func NewRouter(apiController *controller.APIController) *gin.Engine {
 	router := gin.Default()
+
+	router.Use(middleware.CORSMiddleware())
 
 	router.LoadHTMLGlob("templates/**/*")
 

@@ -11,10 +11,10 @@ const docTemplate = `{
         "title": "{{.Title}}",
         "termsOfService": "https://servebin.dev/",
         "contact":  {
-            "email": "contact@servebin.dev"
+            "email": "contact@mrayush.me"
         },
         "license": {
-            "name": "BSD-3-Clause",
+            "name": "BSD 3-Clause",
             "url": "https://github.com/AyushAgnihotri2025/ServeBin/blob/master/LICENSE"
         },
         "version": "{{.Version}}"
@@ -368,12 +368,12 @@ const docTemplate = `{
 
 // SwaggerInfo holds exported Swagger Info so clients can modify it
 var SwaggerInfo = &swag.Spec{
-	Version:          "v1.0.0",
+	Version:          "v1.0.1",
 	Host:             "servebin.dev",
 	BasePath:         "/",
 	Schemes:          []string{"http", "https"},
 	Title:            "ServeBin",
-	Description:      "Welcome to ServeBin API documentation! ServeBin is a cutting-edge HTTP testing and debugging tool, built with the latest technologies in Go. This documentation provides comprehensive details about the endpoints, parameters, and responses offered by ServeBin, empowering developers to streamline their testing workflows and ensure the reliability of their applications. Explore the various features and capabilities of ServeBin API to optimize your development process and elevate your HTTP testing experience.",
+	Description:      "Welcome to ServeBin documentation! ServeBin is a cutting-edge HTTP testing and debugging tool, built with the latest technologies in Go. This documentation provides comprehensive details about the endpoints, parameters, and responses offered by ServeBin, empowering developers to streamline their testing workflows and ensure the reliability of their applications. Explore the various features and capabilities of ServeBin to optimize your development process and elevate your HTTP testing experience.",
 	InfoInstanceName: "swagger",
 	SwaggerTemplate:  docTemplate,
 	LeftDelim:        "{{",

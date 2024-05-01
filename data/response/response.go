@@ -15,6 +15,8 @@ type AboutResponse struct {
 	Version    string `json:"version"`
 	ServerTime string `json:"serverTime"`
 	Developer  string `json:"developer"`
+	Contact    string `json:"contact"`
+	SourceCode string `json:"sourceCode"`
 }
 
 type HeartbeatResponse struct {

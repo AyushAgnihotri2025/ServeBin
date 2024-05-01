@@ -32,10 +32,12 @@ func (controller *APIController) About(ctx *gin.Context) {
 	Response := response.AboutResponse{
 		Version:    ServeBin.Version,
 		ServerTime: time.Now().String(),
-		Developer:  "Coder",
+		Developer:  "Ayush Agnihotri <AyushAgnihotri2025>",
+		Contact:    "contact@mrayush.me",
+		SourceCode: "https://github.com/AyushAgnihotri2025/ServeBin",
 	}
 	ctx.Header("Content-Type", "application/json")
-	ctx.JSON(http.StatusOK, Response)
+	ctx.PureJSON(http.StatusOK, Response)
 }
 
 // HeartBeat route handler
