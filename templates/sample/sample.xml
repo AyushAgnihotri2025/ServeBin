@@ -1,0 +1,88 @@
+<data>
+    <!-- String -->
+    <string_data>Hello, World from ServeBin!</string_data>
+
+    <!-- Integer -->
+    <integer_data>42</integer_data>
+
+    <!-- Float -->
+    <float_data>3.14</float_data>
+
+    <!-- Boolean -->
+    <boolean_data>true</boolean_data>
+
+    <!-- Date -->
+    <date_data>2024-05-11</date_data>
+
+    <!-- Date and Time -->
+    <datetime_data>2024-05-11T10:30:00</datetime_data>
+
+    <!-- Array (List) -->
+    <array_data>
+        <item>Item 1</item>
+        <item>Item 2</item>
+        <item>Item 3</item>
+    </array_data>
+
+    <!-- Object (Nested Elements) -->
+    <object_data>
+        <name>John Doe</name>
+        <age>30</age>
+        <city>New York</city>
+    </object_data>
+
+    <!-- Null/Empty -->
+    <null_data></null_data>
+
+    <!-- Mixed Data Types -->
+    <mixed_data>
+        <string>Hello, World!</string>
+        <integer>42</integer>
+        <float>3.14</float>
+        <boolean>true</boolean>
+        <date>2024-05-11</date>
+        <datetime>2024-05-11T10:30:00</datetime>
+        <array>
+            <item>Item 1</item>
+            <item>Item 2</item>
+            <item>Item 3</item>
+        </array>
+        <object>
+            <name>John Doe</name>
+            <age>30</age>
+            <city>New York</city>
+        </object>
+        <null></null>
+    </mixed_data>
+
+    <!-- Attributes -->
+    <attribute_data name="John" age="30" city="New York"/>
+
+    <!-- CDATA Section (Character Data) -->
+    <cdata_section><![CDATA[This is a CDATA section with special characters like < & >.]]></cdata_section>
+
+    <!-- Comments -->
+    <!-- This is a comment -->
+
+    <!-- Processing Instruction -->
+    <?xml-stylesheet type="text/xsl" href="style.xsl"?>
+
+    <!-- Entity Reference -->
+    <entity_reference>&lt;This is an entity reference&gt;</entity_reference>
+
+    <!-- Namespaces -->
+    <ns:namespace_data xmlns:ns="http://example.com/ns">
+        <ns:name>John Doe</ns:name>
+        <ns:age>30</ns:age>
+        <ns:city>New York</ns:city>
+    </ns:namespace_data>
+
+    <!-- Base64 Encoded Data -->
+    <base64_data>SGVsbG8sIFdvcmxkIQ==</base64_data>
+
+    <!-- Hexadecimal Data -->
+    <hex_data>48656C6C6F2C20576F726C6421</hex_data>
+
+    <!-- URL Encoded Data -->
+    <url_encoded_data>Hello%2C%20World%21</url_encoded_data>
+</data>

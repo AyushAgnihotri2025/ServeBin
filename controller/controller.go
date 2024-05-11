@@ -11,9 +11,11 @@ import (
 	"ServeBin/helper"
 	"ServeBin/service"
 	"encoding/json"
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"net/http"
 	"os"
+	"strings"
 	"time"
 )
 
@@ -60,4 +62,50 @@ func (controller *APIController) Redirect(ctx *gin.Context) {
 	RedirectUrl := mainServerUrl + ctx.Request.URL.Path
 
 	ctx.Redirect(http.StatusTemporaryRedirect, RedirectUrl)
+}
+
+// Function to generate sitemap.xml
+func (controller *APIController) GenerateSitemap(router *gin.Engine, ctx *gin.Context) {
+	// Get the base URL
+	var baseURL string
+	ssl := os.Getenv("IS_SSL")
+	if strings.ToLower(ssl) == "true" {
+		baseURL = "https://" + ctx.Request.Host
+	} else {
+		baseURL = "http://" + ctx.Request.Host
+	}
+
+	// Initialize the XML string
+	xmlStr := `<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:news="http://www.google.com/schemas/sitemap-news/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:mobile="http://www.google.com/schemas/sitemap-mobile/1.0" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1" xmlns:video="http://www.google.com/schemas/sitemap-video/1.1">`
+
+	// Loop through each registered route
+	for _, route := range router.Routes() {
+		// Construct the full URL
+		fullURL := fmt.Sprintf("%s%s", baseURL, route.Path)
+
+		// Skip any path with parameters
+		skipPath := false
+		cleanURL := strings.Split(fullURL, "/")
+		for _, segment := range cleanURL {
+			if strings.HasPrefix(segment, ":") || strings.HasPrefix(segment, "*") || strings.Contains(segment, "sitemap.xml") {
+				skipPath = true
+				continue
+			}
+		}
+		if skipPath {
+			continue
+		} else {
+			cleanFullURL := strings.Join(cleanURL, "/")
+			currentTime := time.Now().UTC().Format("2006-01-02T15:04:05.999Z")
+
+			// Add the clean URL to the sitemap
+			xmlStr += fmt.Sprintf("<url><loc>%s</loc><lastmod>%s</lastmod><changefreq>always</changefreq><priority>0.8</priority></url>", cleanFullURL, currentTime)
+		}
+	}
+
+	// Close the XML string
+	xmlStr += "</urlset>"
+
+	ctx.Header("Content-Type", "text/xml; charset=utf-8")
+	ctx.String(http.StatusOK, "%s", xmlStr)
 }

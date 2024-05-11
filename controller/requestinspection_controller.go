@@ -7,6 +7,7 @@ package controller
 
 import (
 	"ServeBin/data/response"
+	"ServeBin/helper"
 	"github.com/gin-gonic/gin"
 	"net/http"
 )
@@ -33,8 +34,9 @@ func (controller *APIController) GetIP(ctx *gin.Context) {
 // @Success			200 {object} response.HeaderResponse{}
 // @Router			/headers [get]
 func (controller *APIController) GetHeaders(ctx *gin.Context) {
+	header := helper.GetHeaders(ctx)
 	webResponse := response.HeaderResponse{
-		Header: ctx.Request.Header,
+		Header: header,
 	}
 	ctx.Header("Content-Type", "application/json")
 	ctx.JSON(http.StatusOK, webResponse)

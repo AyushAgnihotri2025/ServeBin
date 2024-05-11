@@ -8,6 +8,7 @@ package service
 import (
 	"github.com/gin-gonic/gin"
 	"github.com/go-playground/validator/v10"
+	"net"
 )
 
 type APIServiceImpl struct {
@@ -22,7 +23,7 @@ func NewAPIServiceImpl(validate *validator.Validate) APIService {
 
 // FindIP implements APIService
 func (t *APIServiceImpl) FindIP(ctx *gin.Context) string {
-	ip := ctx.ClientIP()
+	ip, _, _ := net.SplitHostPort(ctx.Request.RemoteAddr)
 
 	return ip
 }

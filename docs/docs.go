@@ -32,343 +32,1085 @@ const docTemplate = `{
         "url": "https://s2.servebin.dev/"
       }
     ],
-    "tags": [
-      {
-        "name": "Status Codes",
-        "description": "Generates responses with given status code"
-      },
-      {
-        "name": "Request inspection",
-        "description": "Inspect the request data"
-      }
-    ],
-    "paths": {
-      "/headers": {
-        "get": {
-          "tags": [
-            "Request inspection"
-          ],
-          "summary": "Return the incoming request's HTTP headers.",
-          "description": "It returns the incoming request's HTTP headers.",
-          "responses": {
-            "200": {
-              "description": "OK",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "$ref": "#/components/schemas/response.HeaderResponse"
-                  }
+	"paths": {
+        "/brotli": {
+            "get": {
+                "tags": [
+                    "Response formats"
+                ],
+                "summary": "Returns Brotli-encoded data.",
+                "description": "Returns Brotli-encoded data.",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/response.BrotliResponse"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    },
+                    "406": {
+                        "description": "Not Acceptable"
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/response.HTTPError"
+                                }
+                            }
+                        }
+                    }
                 }
-              }
             }
-          }
-        }
-      },
-      "/ip": {
-        "get": {
-          "tags": [
-            "Request inspection"
-          ],
-          "summary": "Get Request IP.",
-          "description": "Returns the requester's IP Address.",
-          "responses": {
-            "200": {
-              "description": "OK",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "$ref": "#/components/schemas/response.IPResponse"
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "/status/{statuscode}": {
-        "get": {
-          "tags": [
-            "Status Codes"
-          ],
-          "summary": "Return status code or random status code if more than one are given.",
-          "description": "Returns the requester's IP Address.",
-          "parameters": [
-            {
-              "name": "statuscode",
-              "in": "path",
-              "description": "Status Code",
-              "required": true,
-              "schema": {
-                "type": "integer"
-              }
-            }
-          ],
-          "responses": {
-            "200": {
-              "description": "OK",
-              "content": {}
-            },
-            "400": {
-              "description": "Bad Request",
-              "content": {}
-            },
-            "404": {
-              "description": "Not Found",
-              "content": {}
-            },
-            "500": {
-              "description": "Internal Server Error",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "$ref": "#/components/schemas/response.HTTPError"
-                  }
-                }
-              }
-            }
-          }
         },
-        "put": {
-          "tags": [
-            "Status Codes"
-          ],
-          "summary": "Return status code or random status code if more than one are given.",
-          "description": "Returns the requester's IP Address.",
-          "parameters": [
-            {
-              "name": "statuscode",
-              "in": "path",
-              "description": "Status Code",
-              "required": true,
-              "schema": {
-                "type": "integer"
-              }
-            }
-          ],
-          "responses": {
-            "200": {
-              "description": "OK",
-              "content": {}
-            },
-            "400": {
-              "description": "Bad Request",
-              "content": {}
-            },
-            "404": {
-              "description": "Not Found",
-              "content": {}
-            },
-            "500": {
-              "description": "Internal Server Error",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "$ref": "#/components/schemas/response.HTTPError"
-                  }
+        "/deflate": {
+            "get": {
+                "tags": [
+                    "Response formats"
+                ],
+                "summary": "Returns Deflate-encoded data.",
+                "description": "Returns Deflate-encoded data.",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/response.DeflateResponse"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    },
+                    "406": {
+                        "description": "Not Acceptable"
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/response.HTTPError"
+                                }
+                            }
+                        }
+                    }
                 }
-              }
             }
-          }
         },
-        "post": {
-          "tags": [
-            "Status Codes"
-          ],
-          "summary": "Return status code or random status code if more than one are given.",
-          "description": "Returns the requester's IP Address.",
-          "parameters": [
-            {
-              "name": "statuscode",
-              "in": "path",
-              "description": "Status Code",
-              "required": true,
-              "schema": {
-                "type": "integer"
-              }
-            }
-          ],
-          "responses": {
-            "200": {
-              "description": "OK",
-              "content": {}
-            },
-            "400": {
-              "description": "Bad Request",
-              "content": {}
-            },
-            "404": {
-              "description": "Not Found",
-              "content": {}
-            },
-            "500": {
-              "description": "Internal Server Error",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "$ref": "#/components/schemas/response.HTTPError"
-                  }
+        "/deny": {
+            "get": {
+                "tags": [
+                    "Response formats"
+                ],
+                "summary": "Returns page denied by robots.txt rules.",
+                "description": "Returns page denied by robots.txt rules.",
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    },
+                    "406": {
+                        "description": "Not Acceptable"
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/response.HTTPError"
+                                }
+                            }
+                        }
+                    }
                 }
-              }
             }
-          }
         },
-        "delete": {
-          "tags": [
-            "Status Codes"
-          ],
-          "summary": "Return status code or random status code if more than one are given.",
-          "description": "Returns the requester's IP Address.",
-          "parameters": [
-            {
-              "name": "statuscode",
-              "in": "path",
-              "description": "Status Code",
-              "required": true,
-              "schema": {
-                "type": "integer"
-              }
-            }
-          ],
-          "responses": {
-            "200": {
-              "description": "OK",
-              "content": {}
-            },
-            "400": {
-              "description": "Bad Request",
-              "content": {}
-            },
-            "404": {
-              "description": "Not Found",
-              "content": {}
-            },
-            "500": {
-              "description": "Internal Server Error",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "$ref": "#/components/schemas/response.HTTPError"
-                  }
+        "/gzip": {
+            "get": {
+                "tags": [
+                    "Response formats"
+                ],
+                "summary": "Returns GZip-encoded data.",
+                "description": "Returns GZip-encoded data.",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/response.GzipResponse"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    },
+                    "406": {
+                        "description": "Not Acceptable"
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/response.HTTPError"
+                                }
+                            }
+                        }
+                    }
                 }
-              }
             }
-          }
         },
-        "patch": {
-          "tags": [
-            "Status Codes"
-          ],
-          "summary": "Return status code or random status code if more than one are given.",
-          "description": "Returns the requester's IP Address.",
-          "parameters": [
-            {
-              "name": "statuscode",
-              "in": "path",
-              "description": "Status Code",
-              "required": true,
-              "schema": {
-                "type": "integer"
-              }
-            }
-          ],
-          "responses": {
-            "200": {
-              "description": "OK",
-              "content": {}
-            },
-            "400": {
-              "description": "Bad Request",
-              "content": {}
-            },
-            "404": {
-              "description": "Not Found",
-              "content": {}
-            },
-            "500": {
-              "description": "Internal Server Error",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "$ref": "#/components/schemas/response.HTTPError"
-                  }
+        "/headers": {
+            "get": {
+                "tags": [
+                    "Request inspection"
+                ],
+                "summary": "Return the incoming request's HTTP headers.",
+                "description": "It returns the incoming request's HTTP headers.",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/response.HeaderResponse"
+                                }
+                            }
+                        }
+                    }
                 }
-              }
             }
-          }
+        },
+        "/html": {
+            "get": {
+                "tags": [
+                    "Response formats"
+                ],
+                "summary": "Returns a simple HTML document.",
+                "description": "Returns a simple HTML document.",
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    },
+                    "406": {
+                        "description": "Not Acceptable"
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/response.HTTPError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/image": {
+            "get": {
+                "tags": [
+                    "Images"
+                ],
+                "summary": "Returns image as per the Accept header.",
+                "description": "Returns a simple image of the type suggest by the Accept header.",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "image/png": {
+                                "schema": {
+                                    "format": "binary"
+                                }
+                            },
+                            "image/jpeg": {
+                                "schema": {
+                                    "format": "binary"
+                                }
+                            },
+                            "image/svg+xml": {
+                                "schema": {
+                                    "format": "binary"
+                                }
+                            },
+                            "image/gif": {
+                                "schema": {
+                                    "format": "binary"
+                                }
+                            },
+                            "image/webp": {
+                                "schema": {
+                                    "format": "binary"
+                                }
+                            },
+                            "image/tiff": {
+                                "schema": {
+                                    "format": "binary"
+                                }
+                            },
+                            "image/bmp": {
+                                "schema": {
+                                    "format": "binary"
+                                }
+                            },
+                            "image/apng": {
+                                "schema": {
+                                    "format": "binary"
+                                }
+                            },
+                            "image/avif": {
+                                "schema": {
+                                    "format": "binary"
+                                }
+                            },
+                            "image/x-icon": {
+                                "schema": {
+                                    "format": "binary"
+                                }
+                            },
+                            "image/*": {
+                                "schema": {
+                                    "format": "binary"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    },
+                    "406": {
+                        "description": "Not Acceptable"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
+            }
+        },
+        "/image/apng": {
+            "get": {
+                "tags": [
+                    "Images"
+                ],
+                "summary": "Returns a simple APNG image.",
+                "description": "Returns a simple image of the APNG mime-type.",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "image/apng": {
+                                "schema": {
+                                    "format": "binary"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    },
+                    "406": {
+                        "description": "Not Acceptable"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
+            }
+        },
+        "/image/avif": {
+            "get": {
+                "tags": [
+                    "Images"
+                ],
+                "summary": "Returns a simple AVIF image.",
+                "description": "Returns a simple image of the AVIF mime-type.",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "image/avif": {
+                                "schema": {
+                                    "format": "binary"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    },
+                    "406": {
+                        "description": "Not Acceptable"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
+            }
+        },
+        "/image/bmp": {
+            "get": {
+                "tags": [
+                    "Images"
+                ],
+                "summary": "Returns a simple BMP image.",
+                "description": "Returns a simple image of the BMP mime-type.",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "image/bmp": {
+                                "schema": {
+                                    "format": "binary"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    },
+                    "406": {
+                        "description": "Not Acceptable"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
+            }
+        },
+        "/image/gif": {
+            "get": {
+                "tags": [
+                    "Images"
+                ],
+                "summary": "Returns a simple GIF image.",
+                "description": "Returns a simple image of the GIF mime-type.",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "image/gif": {
+                                "schema": {
+                                    "format": "binary"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    },
+                    "406": {
+                        "description": "Not Acceptable"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
+            }
+        },
+        "/image/ico": {
+            "get": {
+                "tags": [
+                    "Images"
+                ],
+                "summary": "Returns a simple ICO image.",
+                "description": "Returns a simple image of the ICO mime-type.",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "image/x-icon": {
+                                "schema": {
+                                    "format": "binary"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    },
+                    "406": {
+                        "description": "Not Acceptable"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
+            }
+        },
+        "/image/jpeg": {
+            "get": {
+                "tags": [
+                    "Images"
+                ],
+                "summary": "Returns a simple JPEG image.",
+                "description": "Returns a simple image of the JPEG mime-type.",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "image/jpeg": {
+                                "schema": {
+                                    "format": "binary"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    },
+                    "406": {
+                        "description": "Not Acceptable"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
+            }
+        },
+        "/image/png": {
+            "get": {
+                "tags": [
+                    "Images"
+                ],
+                "summary": "Returns a simple PNG image.",
+                "description": "Returns a simple image of the PNG mime-type.",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "image/png": {
+                                "schema": {
+                                    "format": "binary"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    },
+                    "406": {
+                        "description": "Not Acceptable"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
+            }
+        },
+        "/image/svg": {
+            "get": {
+                "tags": [
+                    "Images"
+                ],
+                "summary": "Returns a simple SVG image.",
+                "description": "Returns a simple image of the SVG mime-type.",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "image/svg+xml": {
+                                "schema": {
+                                    "format": "binary"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    },
+                    "406": {
+                        "description": "Not Acceptable"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
+            }
+        },
+        "/image/tiff": {
+            "get": {
+                "tags": [
+                    "Images"
+                ],
+                "summary": "Returns a simple TIFF image.",
+                "description": "Returns a simple image of the TIFF mime-type.",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "image/tiff": {
+                                "schema": {
+                                    "format": "binary"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    },
+                    "406": {
+                        "description": "Not Acceptable"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
+            }
+        },
+        "/image/webp": {
+            "get": {
+                "tags": [
+                    "Images"
+                ],
+                "summary": "Returns a simple WEBP image.",
+                "description": "Returns a simple image of the WEBP mime-type.",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "image/webp": {
+                                "schema": {
+                                    "format": "binary"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    },
+                    "406": {
+                        "description": "Not Acceptable"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
+            }
+        },
+        "/ip": {
+            "get": {
+                "tags": [
+                    "Request inspection"
+                ],
+                "summary": "Get Request IP.",
+                "description": "Returns the requester's IP Address.",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/response.IPResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/json": {
+            "get": {
+                "tags": [
+                    "Response formats"
+                ],
+                "summary": "Returns a simple JSON document.",
+                "description": "Returns a simple JSON document.",
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    },
+                    "406": {
+                        "description": "Not Acceptable"
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/response.HTTPError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/robots.txt": {
+            "get": {
+                "tags": [
+                    "Response formats"
+                ],
+                "summary": "Returns some robots.txt rules.",
+                "description": "Returns some robots.txt rules.",
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    },
+                    "406": {
+                        "description": "Not Acceptable"
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/response.HTTPError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/status/{statuscode}": {
+            "get": {
+                "tags": [
+                    "Status Codes"
+                ],
+                "summary": "Return status code or random status code if more than one are given.",
+                "description": "Returns the requester's IP Address.",
+                "parameters": [
+                    {
+                        "name": "statuscode",
+                        "in": "path",
+                        "description": "Status Code",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/response.HTTPError"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Status Codes"
+                ],
+                "summary": "Return status code or random status code if more than one are given.",
+                "description": "Returns the requester's IP Address.",
+                "parameters": [
+                    {
+                        "name": "statuscode",
+                        "in": "path",
+                        "description": "Status Code",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/response.HTTPError"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Status Codes"
+                ],
+                "summary": "Return status code or random status code if more than one are given.",
+                "description": "Returns the requester's IP Address.",
+                "parameters": [
+                    {
+                        "name": "statuscode",
+                        "in": "path",
+                        "description": "Status Code",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/response.HTTPError"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Status Codes"
+                ],
+                "summary": "Return status code or random status code if more than one are given.",
+                "description": "Returns the requester's IP Address.",
+                "parameters": [
+                    {
+                        "name": "statuscode",
+                        "in": "path",
+                        "description": "Status Code",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "404": {
+                        "description": "Not"
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/response.HTTPError"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "patch": {
+                "tags": [
+                    "Status Codes"
+                ],
+                "summary": "Return status code or random status code if more than one are given.",
+                "description": "Returns the requester's IP Address.",
+                "parameters": [
+                    {
+                        "name": "statuscode",
+                        "in": "path",
+                        "description": "Status Code",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/response.HTTPError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/user-agent": {
+            "get": {
+                "tags": [
+                    "Request inspection"
+                ],
+                "summary": "Return the incoming request's User-Agent header.",
+                "description": "User-Agent header.",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/response.UserAgentResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/xml": {
+            "get": {
+                "tags": [
+                    "Response formats"
+                ],
+                "summary": "Returns a simple XML document.",
+                "description": "Returns a simple XML document.",
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {}
+                    },
+                    "406": {
+                        "description": "Not Acceptable",
+                        "content": {}
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/response.HTTPError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/zstd": {
+            "get": {
+                "tags": [
+                    "Response formats"
+                ],
+                "summary": "Returns Zstd-compressed data.",
+                "description": "Returns Zstd-compressed data.",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/response.ZstdResponse"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    },
+                    "406": {
+                        "description": "Not Acceptable"
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/response.HTTPError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
-      },
-      "/user-agent": {
-        "get": {
-          "tags": [
-            "Request inspection"
-          ],
-          "summary": "Return the incoming request's User-Agent header.",
-          "description": "User-Agent header.",
-          "responses": {
-            "200": {
-              "description": "OK",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "$ref": "#/components/schemas/response.UserAgentResponse"
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
     },
     "components": {
-      "schemas": {
-        "response.HTTPError": {
-          "type": "object",
-          "properties": {
-            "code": {
-              "type": "integer",
-              "example": 400
+        "schemas": {
+            "response.BrotliResponse": {
+                "type": "object",
+                "properties": {
+                    "compressed": {
+                        "type": "boolean",
+                        "example": true
+                    },
+                    "headers": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "type": "string"
+                        }
+                    },
+                    "ip": {
+                        "type": "array",
+                        "items": {
+                            "type": "object"
+                        }
+                    }
+                }
             },
-            "message": {
-              "type": "string",
-              "example": "status bad request"
+            "response.DeflateResponse": {
+                "type": "object",
+                "properties": {
+                    "deflated": {
+                        "type": "boolean",
+                        "example": true
+                    },
+                    "headers": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "type": "string"
+                        }
+                    },
+                    "ip": {
+                        "type": "array",
+                        "items": {
+                            "type": "object"
+                        }
+                    }
+                }
+            },
+            "response.GzipResponse": {
+                "type": "object",
+                "properties": {
+                    "gzipped": {
+                        "type": "boolean",
+                        "example": true
+                    },
+                    "headers": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "type": "string"
+                        }
+                    },
+                    "ip": {
+                        "type": "array",
+                        "items": {
+                            "type": "object"
+                        }
+                    }
+                }
+            },
+            "response.HTTPError": {
+                "type": "object",
+                "properties": {
+                    "code": {
+                        "type": "integer",
+                        "example": 400
+                    },
+                    "message": {
+                        "type": "string",
+                        "example": "status bad request"
+                    }
+                }
+            },
+            "response.HeaderResponse": {
+                "type": "object",
+                "properties": {
+                    "headers": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "type": "string"
+                        }
+                    }
+                }
+            },
+            "response.IPResponse": {
+                "type": "object",
+                "properties": {
+                    "ip": {
+                        "type": "array",
+                        "items": {
+                            "type": "object"
+                        }
+                    }
+                }
+            },
+            "response.UserAgentResponse": {
+                "type": "object",
+                "properties": {
+                    "user-agent": {
+                        "type": "string"
+                    }
+                }
+            },
+            "response.ZstdResponse": {
+                "type": "object",
+                "properties": {
+                    "compressed": {
+                        "type": "boolean",
+                        "example": true
+                    },
+                    "headers": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "type": "string"
+                        }
+                    },
+                    "ip": {
+                        "type": "array",
+                        "items": {
+                            "type": "object"
+                        }
+                    }
+                }
             }
-          }
-        },
-        "response.HeaderResponse": {
-          "type": "object",
-          "properties": {
-            "headers": {
-              "type": "object"
-            }
-          }
-        },
-        "response.IPResponse": {
-          "type": "object",
-          "properties": {
-            "ip": {
-              "type": "array",
-              "items": {
-                "type": "object"
-              }
-            }
-          }
-        },
-        "response.UserAgentResponse": {
-          "type": "object",
-          "properties": {
-            "user-agent": {
-              "type": "string"
-            }
-          }
         }
-      }
     },
     "x-original-swagger-version": "2.0"
 }`
 
 // SwaggerInfo holds exported Swagger Info so clients can modify it
 var SwaggerInfo = &swag.Spec{
-	Version:          "v1.0.1",
+	Version:          "v1.0.2",
 	Host:             "servebin.dev",
 	BasePath:         "/",
 	Schemes:          []string{"http", "https"},

@@ -14,5 +14,5 @@ type UserAgentResponse struct {
 }
 
 type HeaderResponse struct {
-	Header interface{} `json:"headers,omitempty"`
+	Header map[string]string `json:"headers,omitempty"`
 }

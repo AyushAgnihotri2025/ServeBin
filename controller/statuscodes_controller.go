@@ -17,6 +17,7 @@ import (
 // @Summary			Return status code or random status code if more than one are given.
 // @Description		Returns the requester's IP Address.
 // @Param        	statuscode   path  int  true  "Status Code"
+// @Default			200
 // @Success			200
 // @Failure      	400
 // @Failure      	404
@@ -27,7 +28,11 @@ import (
 // @Router			/status/{statuscode} [put]
 // @Router			/status/{statuscode} [patch]
 func (controller *APIController) GetStatusCodes(ctx *gin.Context) {
-	status, err := strconv.ParseInt(ctx.Param("statuscode"), 10, 64)
+	statusCode := ctx.Param("statuscode")
+	if statusCode == "" {
+		statusCode = "200"
+	}
+	status, err := strconv.ParseInt(statusCode, 10, 64)
 	if err != nil {
 		helper.NewError(ctx, http.StatusNotFound, err)
 		return

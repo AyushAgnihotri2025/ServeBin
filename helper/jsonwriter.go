@@ -3,7 +3,14 @@
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
-package ServeBin
+package helper
 
-// Version of ServeBin.
-const Version = "v1.0.2"
+import (
+	"encoding/json"
+	"io"
+)
+
+func WriteJSON(w io.Writer, v interface{}) error {
+	enc := json.NewEncoder(w)
+	return enc.Encode(v)
+}

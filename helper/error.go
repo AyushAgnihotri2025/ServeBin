@@ -19,9 +19,17 @@ func ErrorPanic(err error) {
 }
 
 // It create send error as response while it counters any failure in parsing of json
-func WebErrorPanic(err error, ctx *gin.Context) {
+func JsonErrorPanic(err error, ctx *gin.Context) {
 	if err != nil {
 		ctx.String(http.StatusInternalServerError, "Failed to marshal JSON")
+		return
+	}
+}
+
+// It create send error as response while it counters any failure in parsing of image
+func ImageErrorPanic(err error, ctx *gin.Context) {
+	if err != nil {
+		ctx.String(http.StatusInternalServerError, "Failed to generate JPEG: "+err.Error())
 		return
 	}
 }

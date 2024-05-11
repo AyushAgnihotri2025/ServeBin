@@ -27,6 +27,7 @@ func NewRouter(apiController *controller.APIController) *gin.Engine {
 		// Redirect to the Main Server
 		router.GET("", apiController.Redirect)
 		router.GET("/docs/*any", apiController.Redirect)
+		router.GET("/sitemap.xml", apiController.Redirect)
 	} else {
 		// Root Path
 		router.GET("", func(ctx *gin.Context) {
@@ -35,6 +36,11 @@ func NewRouter(apiController *controller.APIController) *gin.Engine {
 
 		// Add Swagger
 		router.GET("/docs/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
+
+		// Sitemap route
+		router.GET("/sitemap.xml", func(context *gin.Context) {
+			apiController.GenerateSitemap(router, context)
+		})
 	}
 
 	router.GET("/docs", func(ctx *gin.Context) {
@@ -49,7 +55,21 @@ func NewRouter(apiController *controller.APIController) *gin.Engine {
 	router.GET("/headers", apiController.GetHeaders)
 	router.GET("/user-agent", apiController.GetUserAgent)
 
+	router.GET("/status", apiController.GetStatusCodes)
 	router.Any("/status/:statuscode", apiController.GetStatusCodes)
+
+	router.GET("/image", apiController.GetImages)
+	router.GET("/image/:imagetype", apiController.GetImages)
+
+	router.GET("/xml", apiController.GetXML)
+	router.GET("/html", apiController.GetHTML)
+	router.GET("/json", apiController.GetJson)
+	router.GET("/deny", apiController.GetDenyPath)
+	router.GET("/gzip", apiController.Getgzip)
+	router.GET("/brotli", apiController.Getbrotli)
+	router.GET("/deflate", apiController.Getdeflate)
+	router.GET("/zstd", apiController.Getzstd)
+	router.GET("/robots.txt", apiController.GetRobotsTxt)
 
 	return router
 }

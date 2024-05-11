@@ -9,3 +9,11 @@
     <br />
 </p>
 <hr>
+<h2>Local Development Requirements</h2>
+<ul>
+    <li><b>For Images Route:</b></li>
+    <ol>
+        <li><b>WebP Encoder:</b>&nbsp;<a href="https://developers.google.com/speed/webp/download">cwebp</a></li>
+        <li><b>Avif Encoder:</b>&nbsp;<a href="https://github.com/AOMediaCodec/libavif?tab=readme-ov-file#installation">avifenc</a></li>
+    </ol>
+</ul>

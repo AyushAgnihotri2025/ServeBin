@@ -11,4 +11,14 @@ import (
 
 type APIService interface {
 	FindIP(ctx *gin.Context) string
+	GeneratePNG() ([]byte, error)
+	GenerateJPEG() ([]byte, error)
+	GenerateSVG() ([]byte, error)
+	GenerateGIF() ([]byte, error)
+	GenerateWEBP() ([]byte, error)
+	GenerateTIFF() ([]byte, error)
+	GenerateBMP() ([]byte, error)
+	GenerateAPNG() ([]byte, error)
+	GenerateAVIF() ([]byte, error)
+	GenerateICO() ([]byte, error)
 }
