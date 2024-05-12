@@ -23,7 +23,7 @@ func NewAPIServiceImpl(validate *validator.Validate) APIService {
 
 // FindIP implements APIService
 func (t *APIServiceImpl) FindIP(ctx *gin.Context) string {
-	ip, _, _ := net.SplitHostPort(ctx.Request.RemoteAddr)
+	ip := ctx.ClientIP()
 
 	return ip
 }
