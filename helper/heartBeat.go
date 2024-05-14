@@ -7,13 +7,22 @@ package helper
 
 import (
 	"ServeBin/data/response"
-	"github.com/shirou/gopsutil/disk"
+	"github.com/shirou/gopsutil/v3/cpu"
+	"github.com/shirou/gopsutil/v3/disk"
 	"log"
 	"net/http"
 	"runtime"
-	"strconv"
 	"time"
 )
+
+// Gets the CPU load of the machine.
+func getCPULoad() float64 {
+	percent, err := cpu.Percent(time.Second, false)
+	if err != nil {
+		log.Fatal(err)
+	}
+	return percent[0]
+}
 
 // Gets and returns the Network Latency of the Host
 func getNetworkLatency(url string, numAttempts int) (float64, float64, float64) {
@@ -55,6 +64,15 @@ func getNetworkLatency(url string, numAttempts int) (float64, float64, float64) 
 	return minLatency, avgLatency, maxLatency
 }
 
+// Get the machine's Disk Usage
+func getDiskUsage() (uint64, uint64, uint64) {
+	usage, err := disk.Usage("/")
+	if err != nil {
+		log.Fatal(err)
+	}
+	return usage.Total, usage.Free, usage.Used
+}
+
 // Get the OS current RAM usage
 func getRAMUsage() (float64, float64) {
 	memStats := new(runtime.MemStats)
@@ -67,7 +85,7 @@ func getRAMUsage() (float64, float64) {
 }
 
 // Get the OS disk related stuffs
-func getDiskOperations() (uint64, uint64) {
+func getDiskOperationsAndPartitions() (uint64, uint64, uint64) {
 	partitions, err := disk.Partitions(true)
 	if err != nil {
 		log.Fatal(err)
@@ -75,6 +93,7 @@ func getDiskOperations() (uint64, uint64) {
 
 	var readCount uint64
 	var writeCount uint64
+	var partitionsCount uint64
 
 	for _, partition := range partitions {
 		usage, err := disk.IOCounters(partition.Mountpoint)
@@ -82,11 +101,15 @@ func getDiskOperations() (uint64, uint64) {
 			log.Fatal(err)
 		}
 
-		readCount += usage[strconv.Itoa(0)].ReadCount
-		writeCount += usage[strconv.Itoa(0)].WriteCount
+		for _, value := range usage {
+			readCount += value.ReadCount
+			writeCount += value.WriteCount
+		}
+
+		partitionsCount += 1
 	}
 
-	return readCount, writeCount
+	return readCount, writeCount, partitionsCount
 }
 
 // Get the server status on the basis of the different parameters
@@ -96,6 +119,9 @@ func GetHeartbeats() response.HeartbeatStats {
 	// Physical and Logical CPU Count
 	stats.PhysicalAndLogicalCPUCount = runtime.NumCPU()
 
+	// CPU Load
+	stats.CPULoad = getCPULoad()
+
 	// Memory Usage
 	totalRAM, usedRAM := getRAMUsage()
 	stats.RAM = response.RAMStats{
@@ -104,13 +130,20 @@ func GetHeartbeats() response.HeartbeatStats {
 	}
 
 	// Disk Usage
-	readCount, writeCount := getDiskOperations()
+	totalDisk, freeDisk, usedDisk := getDiskUsage()
 	stats.Disk = response.DiskStats{
-		ReadWrite: response.DiskReadWrite{
-			Read:    readCount,
-			Written: writeCount,
-		},
+		TotalDiskSpace: totalDisk,
+		FreeDiskSpace:  freeDisk,
+		UsedDiskSpace:  usedDisk,
 	}
+
+	// Disk Usage
+	readCount, writeCount, partitionsCount := getDiskOperationsAndPartitions()
+	stats.Disk.ReadWrite = response.DiskReadWrite{
+		Read:    readCount,
+		Written: writeCount,
+	}
+	stats.Disk.Partitions = partitionsCount
 
 	// Network Latency
 	minLatency, avg, maxLatency := getNetworkLatency("https://ping.atishir.co", 5)

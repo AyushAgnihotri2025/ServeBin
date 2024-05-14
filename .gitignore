@@ -29,6 +29,6 @@ go.work
 
 # Custom
 .envrc
-*.txt
 *.sh
 .bin/
+!sample/*

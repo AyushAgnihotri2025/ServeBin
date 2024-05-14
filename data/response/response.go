@@ -25,7 +25,7 @@ type HeartbeatResponse struct {
 }
 
 type HeartbeatStats struct {
-	CPULoad                    int            `json:"cpu_load"`
+	CPULoad                    float64        `json:"cpu_load"`
 	Disk                       DiskStats      `json:"disk"`
 	NetworkLatency             NetworkLatency `json:"network_latency"`
 	PhysicalAndLogicalCPUCount int            `json:"physical_and_logical_cpu_count"`
@@ -33,10 +33,11 @@ type HeartbeatStats struct {
 }
 
 type DiskStats struct {
-	FreeDiskSpace  float64       `json:"free_disk_space"`
+	FreeDiskSpace  uint64        `json:"free_disk_space"`
 	ReadWrite      DiskReadWrite `json:"read_write"`
-	TotalDiskSpace float64       `json:"total_disk_space"`
-	UsedDiskSpace  float64       `json:"used_disk_space"`
+	TotalDiskSpace uint64        `json:"total_disk_space"`
+	UsedDiskSpace  uint64        `json:"used_disk_space"`
+	Partitions     uint64        `json:"partitions"`
 }
 
 type DiskReadWrite struct {
