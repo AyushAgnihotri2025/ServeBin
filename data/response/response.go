@@ -41,8 +41,8 @@ type DiskStats struct {
 }
 
 type DiskReadWrite struct {
-	Read    uint64 `json:"read"`
-	Written uint64 `json:"written"`
+	Read    int64 `json:"read"`
+	Written int64 `json:"written"`
 }
 
 type NetworkLatency struct {

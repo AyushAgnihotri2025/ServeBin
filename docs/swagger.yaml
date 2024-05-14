@@ -14,7 +14,7 @@ info:
   license:
     name: BSD 3-Clause
     url: https://github.com/AyushAgnihotri2025/ServeBin/blob/master/LICENSE
-  version: v1.0.2
+  version: v1.0.3
 servers:
   - url: https://servebin.dev/
   - url: https://s1.servebin.dev/

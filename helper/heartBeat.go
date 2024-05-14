@@ -85,14 +85,14 @@ func getRAMUsage() (float64, float64) {
 }
 
 // Get the OS disk related stuffs
-func getDiskOperationsAndPartitions() (uint64, uint64, uint64) {
+func getDiskOperationsAndPartitions() (int64, int64, uint64) {
 	partitions, err := disk.Partitions(true)
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	var readCount uint64
-	var writeCount uint64
+	var readCount int64
+	var writeCount int64
 	var partitionsCount uint64
 
 	for _, partition := range partitions {
@@ -102,8 +102,8 @@ func getDiskOperationsAndPartitions() (uint64, uint64, uint64) {
 		}
 
 		for _, value := range usage {
-			readCount += value.ReadCount
-			writeCount += value.WriteCount
+			readCount += int64(value.ReadCount)
+			writeCount += int64(value.WriteCount)
 		}
 
 		partitionsCount += 1
