@@ -19,7 +19,7 @@ import (
 )
 
 // @title           	ServeBin
-// @version         	v1.0.3
+// @version         	v1.1.0
 // @description			Welcome to ServeBin documentation! ServeBin is a cutting-edge HTTP testing and debugging tool, built with the latest technologies in Go. This documentation provides comprehensive details about the endpoints, parameters, and responses offered by ServeBin, empowering developers to streamline their testing workflows and ensure the reliability of their applications. Explore the various features and capabilities of ServeBin to optimize your development process and elevate your HTTP testing experience.
 // @termsOfService  	https://servebin.dev/
 

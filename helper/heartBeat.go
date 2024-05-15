@@ -7,12 +7,14 @@ package helper
 
 import (
 	"ServeBin/data/response"
-	"github.com/shirou/gopsutil/v3/cpu"
-	"github.com/shirou/gopsutil/v3/disk"
+	"fmt"
 	"log"
 	"net/http"
 	"runtime"
 	"time"
+
+	"github.com/shirou/gopsutil/v3/cpu"
+	"github.com/shirou/gopsutil/v3/disk"
 )
 
 // Gets the CPU load of the machine.
@@ -94,19 +96,27 @@ func getDiskOperationsAndPartitions() (int64, int64, uint64) {
 	var readCount int64
 	var writeCount int64
 	var partitionsCount uint64
+	checkedDevices := make(map[string]bool)
 
 	for _, partition := range partitions {
-		usage, err := disk.IOCounters(partition.Mountpoint)
+		usage, err := disk.IOCounters(partition.Device)
 		if err != nil {
 			log.Fatal(err)
 		}
 
-		for _, value := range usage {
-			readCount += int64(value.ReadCount)
-			writeCount += int64(value.WriteCount)
-		}
+		if len(usage) > 0 {
+			for device, value := range usage {
+				if !checkedDevices[device] {
+					readCount += int64(value.ReadCount)
+					writeCount += int64(value.WriteCount)
 
-		partitionsCount += 1
+					fmt.Println(usage)
+
+					partitionsCount += 1
+					checkedDevices[device] = true // Mark device as checked
+				}
+			}
+		}
 	}
 
 	return readCount, writeCount, partitionsCount
