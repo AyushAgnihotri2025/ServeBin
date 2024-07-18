@@ -21,4 +21,8 @@ type APIService interface {
 	GenerateAPNG() ([]byte, error)
 	GenerateAVIF() ([]byte, error)
 	GenerateICO() ([]byte, error)
+	ReturnArguments(ctx *gin.Context) (map[string]interface{}, error)
+	ReturnFormData(ctx *gin.Context) (map[string]interface{}, error)
+	ReturnFormFile(ctx *gin.Context) (map[string]interface{}, error)
+	ReturnJson_RawData(ctx *gin.Context) (map[string]interface{}, error)
 }

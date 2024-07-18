@@ -14,7 +14,7 @@ info:
   license:
     name: BSD 3-Clause
     url: https://github.com/AyushAgnihotri2025/ServeBin/blob/master/LICENSE
-  version: v1.1.0
+  version: v1.2.0
 servers:
   - url: https://servebin.dev/
   - url: https://s1.servebin.dev/
@@ -28,6 +28,8 @@ tags:
     description: Returns responses in different data formats
   - name: Images
     description: Returns different image formats
+  - name: HTTP Methods
+    description: Testing different HTTP verbs
 paths:
   /brotli:
     get:
@@ -94,6 +96,43 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/response.HTTPError'
+  /get:
+    get:
+      tags:
+        - HTTP Methods
+      summary: Returns the request parameters.
+      description: "Returns different type of request parameters like form data, json\
+          \ data, raw data, headers etc."
+      parameters:
+        - name: customheader
+          in: header
+          description: Header
+          schema:
+            type: string
+        - name: queryparam
+          in: query
+          description: Query Paramater
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/response.EmptyResponse'
+        "400":
+          description: Bad Request
+          content: { }
+        "404":
+          description: Not Found
+          content: { }
+        "500":
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/response.HTTPError'
   /gzip:
     get:
       tags:
@@ -111,6 +150,36 @@ paths:
           description: Not Found
         "406":
           description: Not Acceptable
+          content: { }
+        "500":
+          description: Internal Server Error
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/response.HTTPError'
+  /head:
+    head:
+      tags:
+        - HTTP Methods
+      summary: Returns the request parameters.
+      description: "Returns different type of request parameters like form data, json\
+        \ data, raw data, headers etc."
+      parameters:
+        - name: customheader
+          in: header
+          description: Header
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+          content: { }
+        "400":
+          description: Bad Request
+          content: { }
+        "404":
+          description: Not Found
+          content: { }
         "500":
           description: Internal Server Error
           content:
@@ -414,6 +483,186 @@ paths:
           description: Not Found
         "406":
           description: Not Acceptable
+          content: { }
+        "500":
+          description: Internal Server Error
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/response.HTTPError'
+  /options:
+    options:
+      tags:
+        - HTTP Methods
+      summary: Returns the request parameters.
+      description: "Returns different type of request parameters like form data, json\
+        \ data, raw data, headers etc."
+      parameters:
+        - name: customheader
+          in: header
+          description: Header
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+          content: { }
+        "400":
+          description: Bad Request
+          content: { }
+        "404":
+          description: Not Found
+          content: { }
+        "500":
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/response.HTTPError'
+  /patch:
+    patch:
+      tags:
+        - HTTP Methods
+      summary: Returns the request parameters.
+      description: "Returns different type of request parameters like form data, json\
+        \ data, raw data, headers etc."
+      parameters:
+        - name: customheader
+          in: header
+          description: Header
+          schema:
+            type: string
+        - name: queryparam
+          in: query
+          description: Query Paramater
+          schema:
+            type: string
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                body:
+                  type: string
+                  description: Body
+                formdata:
+                  type: string
+                  description: Form Data
+                  format: binary
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/response.BodyDataResponse'
+        "400":
+          description: Bad Request
+          content: { }
+        "404":
+          description: Not Found
+          content: { }
+        "500":
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/response.HTTPError'
+  /post:
+    post:
+      tags:
+        - HTTP Methods
+      summary: Returns the request parameters.
+      description: "Returns different type of request parameters like form data, json\
+        \ data, raw data, headers etc."
+      parameters:
+        - name: customheader
+          in: header
+          description: Header
+          schema:
+            type: string
+        - name: queryparam
+          in: query
+          description: Query Paramater
+          schema:
+            type: string
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                body:
+                  type: string
+                  description: Body
+                formdata:
+                  type: string
+                  description: Form Data
+                  format: binary
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/response.BodyDataResponse'
+        "400":
+          description: Bad Request
+          content: { }
+        "404":
+          description: Not Found
+          content: { }
+        "500":
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/response.HTTPError'
+  /put:
+    put:
+      tags:
+        - HTTP Methods
+      summary: Returns the request parameters.
+      description: "Returns different type of request parameters like form data, json\
+        \ data, raw data, headers etc."
+      parameters:
+        - name: customheader
+          in: header
+          description: Header
+          schema:
+            type: string
+        - name: queryparam
+          in: query
+          description: Query Paramater
+          schema:
+            type: string
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                body:
+                  type: string
+                  description: Body
+                formdata:
+                  type: string
+                  description: Form Data
+                  format: binary
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/response.BodyDataResponse'
+        "400":
+          description: Bad Request
+          content: { }
+        "404":
+          description: Not Found
+          content: { }
         "500":
           description: Internal Server Error
           content:
@@ -533,7 +782,7 @@ paths:
         "400":
           description: Bad Request
         "404":
-          description: Not
+          description: Not Found
         "500":
           description: Internal Server Error
           content:
@@ -624,6 +873,32 @@ paths:
                 $ref: '#/components/schemas/response.HTTPError'
 components:
   schemas:
+    response.BodyDataResponse:
+      type: object
+      properties:
+        arg:
+          type: object
+          additionalProperties: true
+        data:
+          type: object
+        files:
+          type: object
+        form:
+          type: object
+        headers:
+          type: object
+          additionalProperties:
+            type: string
+        ip:
+          type: array
+          items:
+            type: object
+        json:
+          type: object
+        method:
+          type: string
+        url:
+          type: string
     response.BrotliResponse:
       type: object
       properties:
@@ -652,6 +927,24 @@ components:
           type: array
           items:
             type: object
+    response.EmptyResponse:
+      type: object
+      properties:
+        arg:
+          type: object
+          additionalProperties: true
+        headers:
+          type: object
+          additionalProperties:
+            type: string
+        ip:
+          type: array
+          items:
+            type: object
+        method:
+          type: string
+        url:
+          type: string
     response.GzipResponse:
       type: object
       properties:

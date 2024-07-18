@@ -32,7 +32,29 @@ const docTemplate = `{
         "url": "https://s2.servebin.dev/"
       }
     ],
-	"paths": {
+	"tags": [
+        {
+            "name": "Status Codes",
+            "description": "Generates responses with given status code"
+        },
+        {
+            "name": "Request inspection",
+            "description": "Inspect the request data"
+        },
+        {
+            "name": "Response formats",
+            "description": "Returns responses in different data formats"
+        },
+        {
+            "name": "Images",
+            "description": "Returns different image formats"
+        },
+        {
+            "name": "HTTP Methods",
+            "description": "Testing different HTTP verbs"
+        }
+    ],
+    "paths": {
         "/brotli": {
             "get": {
                 "tags": [
@@ -137,6 +159,63 @@ const docTemplate = `{
                 }
             }
         },
+        "/get": {
+            "get": {
+                "tags": [
+                    "HTTP Methods"
+                ],
+                "summary": "Returns the request parameters.",
+                "description": "Returns different type of request parameters like form data, json data, raw data, headers etc.",
+                "parameters": [
+                    {
+                        "name": "customheader",
+                        "in": "header",
+                        "description": "Header",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "queryparam",
+                        "in": "query",
+                        "description": "Query Paramater",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/response.EmptyResponse"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {}
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {}
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/response.HTTPError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/gzip": {
             "get": {
                 "tags": [
@@ -159,7 +238,51 @@ const docTemplate = `{
                         "description": "Not Found"
                     },
                     "406": {
-                        "description": "Not Acceptable"
+                        "description": "Not Acceptable",
+                        "content": {}
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "text/plain": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/response.HTTPError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/head": {
+            "head": {
+                "tags": [
+                    "HTTP Methods"
+                ],
+                "summary": "Returns the request parameters.",
+                "description": "Returns different type of request parameters like form data, json data, raw data, headers etc.",
+                "parameters": [
+                    {
+                        "name": "customheader",
+                        "in": "header",
+                        "description": "Header",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {}
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {}
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {}
                     },
                     "500": {
                         "description": "Internal Server Error",
@@ -641,7 +764,282 @@ const docTemplate = `{
                         "description": "Not Found"
                     },
                     "406": {
-                        "description": "Not Acceptable"
+                        "description": "Not Acceptable",
+                        "content": {}
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "text/plain": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/response.HTTPError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/options": {
+            "options": {
+                "tags": [
+                    "HTTP Methods"
+                ],
+                "summary": "Returns the request parameters.",
+                "description": "Returns different type of request parameters like form data, json data, raw data, headers etc.",
+                "parameters": [
+                    {
+                        "name": "customheader",
+                        "in": "header",
+                        "description": "Header",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {}
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {}
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {}
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/response.HTTPError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/patch": {
+            "patch": {
+                "tags": [
+                    "HTTP Methods"
+                ],
+                "summary": "Returns the request parameters.",
+                "description": "Returns different type of request parameters like form data, json data, raw data, headers etc.",
+                "parameters": [
+                    {
+                        "name": "customheader",
+                        "in": "header",
+                        "description": "Header",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "queryparam",
+                        "in": "query",
+                        "description": "Query Paramater",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "body": {
+                                        "type": "string",
+                                        "description": "Body"
+                                    },
+                                    "formdata": {
+                                        "type": "string",
+                                        "description": "Form Data",
+                                        "format": "binary"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/response.BodyDataResponse"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {}
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {}
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/response.HTTPError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/post": {
+            "post": {
+                "tags": [
+                    "HTTP Methods"
+                ],
+                "summary": "Returns the request parameters.",
+                "description": "Returns different type of request parameters like form data, json data, raw data, headers etc.",
+                "parameters": [
+                    {
+                        "name": "customheader",
+                        "in": "header",
+                        "description": "Header",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "queryparam",
+                        "in": "query",
+                        "description": "Query Paramater",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "body": {
+                                        "type": "string",
+                                        "description": "Body"
+                                    },
+                                    "formdata": {
+                                        "type": "string",
+                                        "description": "Form Data",
+                                        "format": "binary"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/response.BodyDataResponse"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {}
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {}
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/response.HTTPError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/put": {
+            "put": {
+                "tags": [
+                    "HTTP Methods"
+                ],
+                "summary": "Returns the request parameters.",
+                "description": "Returns different type of request parameters like form data, json data, raw data, headers etc.",
+                "parameters": [
+                    {
+                        "name": "customheader",
+                        "in": "header",
+                        "description": "Header",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "queryparam",
+                        "in": "query",
+                        "description": "Query Paramater",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "body": {
+                                        "type": "string",
+                                        "description": "Body"
+                                    },
+                                    "formdata": {
+                                        "type": "string",
+                                        "description": "Form Data",
+                                        "format": "binary"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/response.BodyDataResponse"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {}
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {}
                     },
                     "500": {
                         "description": "Internal Server Error",
@@ -829,7 +1227,7 @@ const docTemplate = `{
                         "description": "Bad Request"
                     },
                     "404": {
-                        "description": "Not"
+                        "description": "Not Found"
                     },
                     "500": {
                         "description": "Internal Server Error",
@@ -976,6 +1374,45 @@ const docTemplate = `{
     },
     "components": {
         "schemas": {
+            "response.BodyDataResponse": {
+                "type": "object",
+                "properties": {
+                    "arg": {
+                        "type": "object",
+                        "additionalProperties": true
+                    },
+                    "data": {
+                        "type": "object"
+                    },
+                    "files": {
+                        "type": "object"
+                    },
+                    "form": {
+                        "type": "object"
+                    },
+                    "headers": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "type": "string"
+                        }
+                    },
+                    "ip": {
+                        "type": "array",
+                        "items": {
+                            "type": "object"
+                        }
+                    },
+                    "json": {
+                        "type": "object"
+                    },
+                    "method": {
+                        "type": "string"
+                    },
+                    "url": {
+                        "type": "string"
+                    }
+                }
+            },
             "response.BrotliResponse": {
                 "type": "object",
                 "properties": {
@@ -1015,6 +1452,33 @@ const docTemplate = `{
                         "items": {
                             "type": "object"
                         }
+                    }
+                }
+            },
+            "response.EmptyResponse": {
+                "type": "object",
+                "properties": {
+                    "arg": {
+                        "type": "object",
+                        "additionalProperties": true
+                    },
+                    "headers": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "type": "string"
+                        }
+                    },
+                    "ip": {
+                        "type": "array",
+                        "items": {
+                            "type": "object"
+                        }
+                    },
+                    "method": {
+                        "type": "string"
+                    },
+                    "url": {
+                        "type": "string"
                     }
                 }
             },
@@ -1110,7 +1574,7 @@ const docTemplate = `{
 
 // SwaggerInfo holds exported Swagger Info so clients can modify it
 var SwaggerInfo = &swag.Spec{
-	Version:          "v1.1.0",
+	Version:          "v1.2.0",
 	Host:             "servebin.dev",
 	BasePath:         "/",
 	Schemes:          []string{"http", "https"},

@@ -71,5 +71,13 @@ func NewRouter(apiController *controller.APIController) *gin.Engine {
 	router.GET("/zstd", apiController.Getzstd)
 	router.GET("/robots.txt", apiController.GetRobotsTxt)
 
+	router.HEAD("/head", apiController.ResponseHeaderData)
+	router.GET("/get", apiController.ResponseData)
+	router.POST("/post", apiController.ResponseBodyData)
+	router.PUT("/put", apiController.ResponseBodyData)
+	router.DELETE("/delete", apiController.ResponseBodyData)
+	router.PATCH("/patch", apiController.ResponseBodyData)
+	router.OPTIONS("/options", apiController.ResponseHeaderData)
+
 	return router
 }
