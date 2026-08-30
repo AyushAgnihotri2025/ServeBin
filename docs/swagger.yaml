@@ -1,1004 +1,1828 @@
 openapi: 3.0.3
 info:
-  title: ServeBin
-  description: "Welcome to ServeBin documentation! ServeBin is a cutting-edge\
-    \ HTTP testing and debugging tool, built with the latest technologies in Go. This\
-    \ documentation provides comprehensive details about the endpoints, parameters,\
-    \ and responses offered by ServeBin, empowering developers to streamline their\
-    \ testing workflows and ensure the reliability of their applications. Explore\
-    \ the various features and capabilities of ServeBin to optimize your development\
-    \ process and elevate your HTTP testing experience."
-  termsOfService: https://servebin.dev/
-  contact:
-    email: contact@mrayush.me
-  license:
-    name: BSD 3-Clause
-    url: https://github.com/AyushAgnihotri2025/ServeBin/blob/master/LICENSE
-  version: v1.2.0
+    title: ServeBin
+    description:
+        Welcome to ServeBin documentation! ServeBin is a cutting-edge HTTP
+        testing and debugging tool, built with the latest technologies in Go. This documentation
+        provides comprehensive details about the endpoints, parameters, and responses
+        offered by ServeBin, empowering developers to streamline their testing workflows
+        and ensure the reliability of their applications. Explore the various features
+        and capabilities of ServeBin to optimize your development process and elevate
+        your HTTP testing experience.
+    termsOfService: https://servebin.dev/
+    contact:
+        email: contact@mrayush.me
+    license:
+        name: BSD 3-Clause
+        url: https://github.com/AyushAgnihotri2025/ServeBin/blob/master/LICENSE
+    version: v1.3.0
 servers:
-  - url: https://servebin.dev/
-  - url: https://s1.servebin.dev/
-  - url: https://s2.servebin.dev/
+    - url: https://servebin.dev/
+    - url: https://s1.servebin.dev/
+    - url: https://s2.servebin.dev/
 tags:
-  - name: Status Codes
-    description: Generates responses with given status code
-  - name: Request inspection
-    description: Inspect the request data
-  - name: Response formats
-    description: Returns responses in different data formats
-  - name: Images
-    description: Returns different image formats
-  - name: HTTP Methods
-    description: Testing different HTTP verbs
+    - name: Status Codes
+      description: Generates responses with given status code
+    - name: Request inspection
+      description: Inspect the request data
+    - name: Response formats
+      description: Returns responses in different data formats
+    - name: Images
+      description: Returns different image formats
+    - name: HTTP Methods
+      description: Testing different HTTP verbs
+    - name: HTTPBin Compatibility
+      description: HTTPBin-compatible utility endpoints
 paths:
-  /brotli:
-    get:
-      tags:
-        - Response formats
-      summary: Returns Brotli-encoded data.
-      description: Returns Brotli-encoded data.
-      responses:
-        "200":
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/response.BrotliResponse'
-        "404":
-          description: Not Found
-        "406":
-          description: Not Acceptable
-        "500":
-          description: Internal Server Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/response.HTTPError'
-  /deflate:
-    get:
-      tags:
-        - Response formats
-      summary: Returns Deflate-encoded data.
-      description: Returns Deflate-encoded data.
-      responses:
-        "200":
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/response.DeflateResponse'
-        "404":
-          description: Not Found
-        "406":
-          description: Not Acceptable
-        "500":
-          description: Internal Server Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/response.HTTPError'
-  /deny:
-    get:
-      tags:
-        - Response formats
-      summary: Returns page denied by robots.txt rules.
-      description: Returns page denied by robots.txt rules.
-      responses:
-        "200":
-          description: OK
-        "404":
-          description: Not Found
-        "406":
-          description: Not Acceptable
-        "500":
-          description: Internal Server Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/response.HTTPError'
-  /get:
-    get:
-      tags:
-        - HTTP Methods
-      summary: Returns the request parameters.
-      description: "Returns different type of request parameters like form data, json\
-          \ data, raw data, headers etc."
-      parameters:
-        - name: customheader
-          in: header
-          description: Header
-          schema:
-            type: string
-        - name: queryparam
-          in: query
-          description: Query Paramater
-          schema:
-            type: string
-      responses:
-        "200":
-          description: OK
-          content:
-            '*/*':
-              schema:
-                $ref: '#/components/schemas/response.EmptyResponse'
-        "400":
-          description: Bad Request
-          content: { }
-        "404":
-          description: Not Found
-          content: { }
-        "500":
-          description: Internal Server Error
-          content:
-            '*/*':
-              schema:
-                $ref: '#/components/schemas/response.HTTPError'
-  /gzip:
-    get:
-      tags:
-        - Response formats
-      summary: Returns GZip-encoded data.
-      description: Returns GZip-encoded data.
-      responses:
-        "200":
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/response.GzipResponse'
-        "404":
-          description: Not Found
-        "406":
-          description: Not Acceptable
-          content: { }
-        "500":
-          description: Internal Server Error
-          content:
-            text/plain:
-              schema:
-                $ref: '#/components/schemas/response.HTTPError'
-  /head:
-    head:
-      tags:
-        - HTTP Methods
-      summary: Returns the request parameters.
-      description: "Returns different type of request parameters like form data, json\
-        \ data, raw data, headers etc."
-      parameters:
-        - name: customheader
-          in: header
-          description: Header
-          schema:
-            type: string
-      responses:
-        "200":
-          description: OK
-          content: { }
-        "400":
-          description: Bad Request
-          content: { }
-        "404":
-          description: Not Found
-          content: { }
-        "500":
-          description: Internal Server Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/response.HTTPError'
-  /headers:
-    get:
-      tags:
-        - Request inspection
-      summary: Return the incoming request's HTTP headers.
-      description: It returns the incoming request's HTTP headers.
-      responses:
-        "200":
-          description: OK
-          content:
-            'application/json':
-              schema:
-                $ref: '#/components/schemas/response.HeaderResponse'
-  /html:
-    get:
-      tags:
-        - Response formats
-      summary: Returns a simple HTML document.
-      description: Returns a simple HTML document.
-      responses:
-        "200":
-          description: OK
-        "404":
-          description: Not Found
-        "406":
-          description: Not Acceptable
-        "500":
-          description: Internal Server Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/response.HTTPError'
-  /image:
-    get:
-      tags:
-        - Images
-      summary: Returns image as per the Accept header.
-      description: Returns a simple image of the type suggest by the Accept header.
-      responses:
-        "200":
-          description: OK
-          content:
-            image/png:
-              schema:
-                format: binary
-            image/jpeg:
-              schema:
-                format: binary
-            image/svg+xml:
-              schema:
-                format: binary
-            image/gif:
-              schema:
-                format: binary
-            image/webp:
-              schema:
-                format: binary
-            image/tiff:
-              schema:
-                format: binary
-            image/bmp:
-              schema:
-                format: binary
-            image/apng:
-              schema:
-                format: binary
-            image/avif:
-              schema:
-                format: binary
-            image/x-icon:
-              schema:
-                format: binary
-            image/*:
-              schema:
-                format: binary
-        "404":
-          description: Not Found
-        "406":
-          description: Not Acceptable
-        "500":
-          description: Internal Server Error
-  /image/apng:
-    get:
-      tags:
-        - Images
-      summary: Returns a simple APNG image.
-      description: Returns a simple image of the APNG mime-type.
-      responses:
-        "200":
-          description: OK
-          content:
-            image/apng:
-              schema:
-                format: binary
-        "404":
-          description: Not Found
-        "406":
-          description: Not Acceptable
-        "500":
-          description: Internal Server Error
-  /image/avif:
-    get:
-      tags:
-        - Images
-      summary: Returns a simple AVIF image.
-      description: Returns a simple image of the AVIF mime-type.
-      responses:
-        "200":
-          description: OK
-          content:
-            image/avif:
-              schema:
-                format: binary
-        "404":
-          description: Not Found
-        "406":
-          description: Not Acceptable
-        "500":
-          description: Internal Server Error
-  /image/bmp:
-    get:
-      tags:
-        - Images
-      summary: Returns a simple BMP image.
-      description: Returns a simple image of the BMP mime-type.
-      responses:
-        "200":
-          description: OK
-          content:
-            image/bmp:
-              schema:
-                format: binary
-        "404":
-          description: Not Found
-        "406":
-          description: Not Acceptable
-        "500":
-          description: Internal Server Error
-  /image/gif:
-    get:
-      tags:
-        - Images
-      summary: Returns a simple GIF image.
-      description: Returns a simple image of the GIF mime-type.
-      responses:
-        "200":
-          description: OK
-          content:
-            image/gif:
-              schema:
-                format: binary
-        "404":
-          description: Not Found
-        "406":
-          description: Not Acceptable
-        "500":
-          description: Internal Server Error
-  /image/ico:
-    get:
-      tags:
-        - Images
-      summary: Returns a simple ICO image.
-      description: Returns a simple image of the ICO mime-type.
-      responses:
-        "200":
-          description: OK
-          content:
-            image/x-icon:
-              schema:
-                format: binary
-        "404":
-          description: Not Found
-        "406":
-          description: Not Acceptable
-        "500":
-          description: Internal Server Error
-  /image/jpeg:
-    get:
-      tags:
-        - Images
-      summary: Returns a simple JPEG image.
-      description: Returns a simple image of the JPEG mime-type.
-      responses:
-        "200":
-          description: OK
-          content:
-            image/jpeg:
-              schema:
-                format: binary
-        "404":
-          description: Not Found
-        "406":
-          description: Not Acceptable
-        "500":
-          description: Internal Server Error
-  /image/png:
-    get:
-      tags:
-        - Images
-      summary: Returns a simple PNG image.
-      description: Returns a simple image of the PNG mime-type.
-      responses:
-        "200":
-          description: OK
-          content:
-            image/png:
-              schema:
-                format: binary
-        "404":
-          description: Not Found
-        "406":
-          description: Not Acceptable
-        "500":
-          description: Internal Server Error
-  /image/svg:
-    get:
-      tags:
-        - Images
-      summary: Returns a simple SVG image.
-      description: Returns a simple image of the SVG mime-type.
-      responses:
-        "200":
-          description: OK
-          content:
-            image/svg+xml:
-              schema:
-                format: binary
-        "404":
-          description: Not Found
-        "406":
-          description: Not Acceptable
-        "500":
-          description: Internal Server Error
-  /image/tiff:
-    get:
-      tags:
-        - Images
-      summary: Returns a simple TIFF image.
-      description: Returns a simple image of the TIFF mime-type.
-      responses:
-        "200":
-          description: OK
-          content:
-            image/tiff:
-              schema:
-                format: binary
-        "404":
-          description: Not Found
-        "406":
-          description: Not Acceptable
-        "500":
-          description: Internal Server Error
-  /image/webp:
-    get:
-      tags:
-        - Images
-      summary: Returns a simple WEBP image.
-      description: Returns a simple image of the WEBP mime-type.
-      responses:
-        "200":
-          description: OK
-          content:
-            image/webp:
-              schema:
-                format: binary
-        "404":
-          description: Not Found
-        "406":
-          description: Not Acceptable
-        "500":
-          description: Internal Server Error
-  /ip:
-    get:
-      tags:
-        - Request inspection
-      summary: Get Request IP.
-      description: Returns the requester's IP Address.
-      responses:
-        "200":
-          description: OK
-          content:
-            'application/json':
-              schema:
-                $ref: '#/components/schemas/response.IPResponse'
-  /json:
-    get:
-      tags:
-        - Response formats
-      summary: Returns a simple JSON document.
-      description: Returns a simple JSON document.
-      responses:
-        "200":
-          description: OK
-        "404":
-          description: Not Found
-        "406":
-          description: Not Acceptable
-          content: { }
-        "500":
-          description: Internal Server Error
-          content:
-            text/plain:
-              schema:
-                $ref: '#/components/schemas/response.HTTPError'
-  /options:
-    options:
-      tags:
-        - HTTP Methods
-      summary: Returns the request parameters.
-      description: "Returns different type of request parameters like form data, json\
-        \ data, raw data, headers etc."
-      parameters:
-        - name: customheader
-          in: header
-          description: Header
-          schema:
-            type: string
-      responses:
-        "200":
-          description: OK
-          content: { }
-        "400":
-          description: Bad Request
-          content: { }
-        "404":
-          description: Not Found
-          content: { }
-        "500":
-          description: Internal Server Error
-          content:
-            '*/*':
-              schema:
-                $ref: '#/components/schemas/response.HTTPError'
-  /patch:
-    patch:
-      tags:
-        - HTTP Methods
-      summary: Returns the request parameters.
-      description: "Returns different type of request parameters like form data, json\
-        \ data, raw data, headers etc."
-      parameters:
-        - name: customheader
-          in: header
-          description: Header
-          schema:
-            type: string
-        - name: queryparam
-          in: query
-          description: Query Paramater
-          schema:
-            type: string
-      requestBody:
-        content:
-          multipart/form-data:
-            schema:
-              type: object
-              properties:
-                body:
-                  type: string
-                  description: Body
-                formdata:
-                  type: string
-                  description: Form Data
-                  format: binary
-      responses:
-        "200":
-          description: OK
-          content:
-            '*/*':
-              schema:
-                $ref: '#/components/schemas/response.BodyDataResponse'
-        "400":
-          description: Bad Request
-          content: { }
-        "404":
-          description: Not Found
-          content: { }
-        "500":
-          description: Internal Server Error
-          content:
-            '*/*':
-              schema:
-                $ref: '#/components/schemas/response.HTTPError'
-  /post:
-    post:
-      tags:
-        - HTTP Methods
-      summary: Returns the request parameters.
-      description: "Returns different type of request parameters like form data, json\
-        \ data, raw data, headers etc."
-      parameters:
-        - name: customheader
-          in: header
-          description: Header
-          schema:
-            type: string
-        - name: queryparam
-          in: query
-          description: Query Paramater
-          schema:
-            type: string
-      requestBody:
-        content:
-          multipart/form-data:
-            schema:
-              type: object
-              properties:
-                body:
-                  type: string
-                  description: Body
-                formdata:
-                  type: string
-                  description: Form Data
-                  format: binary
-      responses:
-        "200":
-          description: OK
-          content:
-            '*/*':
-              schema:
-                $ref: '#/components/schemas/response.BodyDataResponse'
-        "400":
-          description: Bad Request
-          content: { }
-        "404":
-          description: Not Found
-          content: { }
-        "500":
-          description: Internal Server Error
-          content:
-            '*/*':
-              schema:
-                $ref: '#/components/schemas/response.HTTPError'
-  /put:
-    put:
-      tags:
-        - HTTP Methods
-      summary: Returns the request parameters.
-      description: "Returns different type of request parameters like form data, json\
-        \ data, raw data, headers etc."
-      parameters:
-        - name: customheader
-          in: header
-          description: Header
-          schema:
-            type: string
-        - name: queryparam
-          in: query
-          description: Query Paramater
-          schema:
-            type: string
-      requestBody:
-        content:
-          multipart/form-data:
-            schema:
-              type: object
-              properties:
-                body:
-                  type: string
-                  description: Body
-                formdata:
-                  type: string
-                  description: Form Data
-                  format: binary
-      responses:
-        "200":
-          description: OK
-          content:
-            '*/*':
-              schema:
-                $ref: '#/components/schemas/response.BodyDataResponse'
-        "400":
-          description: Bad Request
-          content: { }
-        "404":
-          description: Not Found
-          content: { }
-        "500":
-          description: Internal Server Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/response.HTTPError'
-  /robots.txt:
-    get:
-      tags:
-        - Response formats
-      summary: Returns some robots.txt rules.
-      description: Returns some robots.txt rules.
-      responses:
-        "200":
-          description: OK
-        "404":
-          description: Not Found
-        "406":
-          description: Not Acceptable
-        "500":
-          description: Internal Server Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/response.HTTPError'
-  /status/{statuscode}:
-    get:
-      tags:
-        - Status Codes
-      summary: Return status code or random status code if more than one are given.
-      description: Returns the requester's IP Address.
-      parameters:
-        - name: statuscode
-          in: path
-          description: Status Code
-          required: true
-          schema:
-            type: integer
-      responses:
-        "200":
-          description: OK
-        "400":
-          description: Bad Request
-        "404":
-          description: Not Found
-        "500":
-          description: Internal Server Error
-          content:
-            'application/json':
-              schema:
-                $ref: '#/components/schemas/response.HTTPError'
-    put:
-      tags:
-        - Status Codes
-      summary: Return status code or random status code if more than one are given.
-      description: Returns the requester's IP Address.
-      parameters:
-        - name: statuscode
-          in: path
-          description: Status Code
-          required: true
-          schema:
-            type: integer
-      responses:
-        "200":
-          description: OK
-        "400":
-          description: Bad Request
-        "404":
-          description: Not Found
-        "500":
-          description: Internal Server Error
-          content:
-            'application/json':
-              schema:
-                $ref: '#/components/schemas/response.HTTPError'
-    post:
-      tags:
-        - Status Codes
-      summary: Return status code or random status code if more than one are given.
-      description: Returns the requester's IP Address.
-      parameters:
-        - name: statuscode
-          in: path
-          description: Status Code
-          required: true
-          schema:
-            type: integer
-      responses:
-        "200":
-          description: OK
-        "400":
-          description: Bad Request
-        "404":
-          description: Not Found
-        "500":
-          description: Internal Server Error
-          content:
-            'application/json':
-              schema:
-                $ref: '#/components/schemas/response.HTTPError'
-    delete:
-      tags:
-        - Status Codes
-      summary: Return status code or random status code if more than one are given.
-      description: Returns the requester's IP Address.
-      parameters:
-        - name: statuscode
-          in: path
-          description: Status Code
-          required: true
-          schema:
-            type: integer
-      responses:
-        "200":
-          description: OK
-        "400":
-          description: Bad Request
-        "404":
-          description: Not Found
-        "500":
-          description: Internal Server Error
-          content:
-            'application/json':
-              schema:
-                $ref: '#/components/schemas/response.HTTPError'
-    patch:
-      tags:
-        - Status Codes
-      summary: Return status code or random status code if more than one are given.
-      description: Returns the requester's IP Address.
-      parameters:
-        - name: statuscode
-          in: path
-          description: Status Code
-          required: true
-          schema:
-            type: integer
-      responses:
-        "200":
-          description: OK
-        "400":
-          description: Bad Request
-        "404":
-          description: Not Found
-        "500":
-          description: Internal Server Error
-          content:
-            'application/json':
-              schema:
-                $ref: '#/components/schemas/response.HTTPError'
-  /user-agent:
-    get:
-      tags:
-        - Request inspection
-      summary: Return the incoming request's User-Agent header.
-      description: User-Agent header.
-      responses:
-        "200":
-          description: OK
-          content:
-            'application/json':
-              schema:
-                $ref: '#/components/schemas/response.UserAgentResponse'
-  /xml:
-    get:
-      tags:
-        - Response formats
-      summary: Returns a simple XML document.
-      description: Returns a simple XML document.
-      responses:
-        "200":
-          description: OK
-        "404":
-          description: Not Found
-          content: { }
-        "406":
-          description: Not Acceptable
-          content: { }
-        "500":
-          description: Internal Server Error
-          content:
-            'application/json':
-              schema:
-                $ref: '#/components/schemas/response.HTTPError'
-  /zstd:
-    get:
-      tags:
-        - Response formats
-      summary: Returns Zstd-compressed data.
-      description: Returns Zstd-compressed data.
-      responses:
-        "200":
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/response.ZstdResponse'
-        "404":
-          description: Not Found
-        "406":
-          description: Not Acceptable
-        "500":
-          description: Internal Server Error
-          content:
-            'application/json':
-              schema:
-                $ref: '#/components/schemas/response.HTTPError'
+    /brotli:
+        get:
+            tags:
+                - Response formats
+            summary: Returns Brotli-encoded data.
+            description: Returns Brotli-encoded data.
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/response.BrotliResponse"
+                "404":
+                    description: Not Found
+                "406":
+                    description: Not Acceptable
+                "500":
+                    description: Internal Server Error
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/response.HTTPError"
+    /deflate:
+        get:
+            tags:
+                - Response formats
+            summary: Returns Deflate-encoded data.
+            description: Returns Deflate-encoded data.
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/response.DeflateResponse"
+                "404":
+                    description: Not Found
+                "406":
+                    description: Not Acceptable
+                "500":
+                    description: Internal Server Error
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/response.HTTPError"
+    /deny:
+        get:
+            tags:
+                - Response formats
+            summary: Returns page denied by robots.txt rules.
+            description: Returns page denied by robots.txt rules.
+            responses:
+                "200":
+                    description: OK
+                "404":
+                    description: Not Found
+                "406":
+                    description: Not Acceptable
+                "500":
+                    description: Internal Server Error
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/response.HTTPError"
+    /get:
+        get:
+            tags:
+                - HTTP Methods
+            summary: Returns the request parameters.
+            description:
+                Returns different type of request parameters like form data, json
+                data, raw data, headers etc.
+            parameters:
+                - name: customheader
+                  in: header
+                  description: Header
+                  schema:
+                      type: string
+                  example: servebin-demo
+                - name: queryparam
+                  in: query
+                  description: Query Paramater
+                  schema:
+                      type: string
+                  example: servebin
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        "*/*":
+                            schema:
+                                $ref: "#/components/schemas/response.EmptyResponse"
+                "400":
+                    description: Bad Request
+                    content: {}
+                "404":
+                    description: Not Found
+                    content: {}
+                "500":
+                    description: Internal Server Error
+                    content:
+                        "*/*":
+                            schema:
+                                $ref: "#/components/schemas/response.HTTPError"
+    /gzip:
+        get:
+            tags:
+                - Response formats
+            summary: Returns GZip-encoded data.
+            description: Returns GZip-encoded data.
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/response.GzipResponse"
+                "404":
+                    description: Not Found
+                "406":
+                    description: Not Acceptable
+                    content: {}
+                "500":
+                    description: Internal Server Error
+                    content:
+                        text/plain:
+                            schema:
+                                $ref: "#/components/schemas/response.HTTPError"
+    /head:
+        head:
+            tags:
+                - HTTP Methods
+            summary: Returns the request parameters.
+            description:
+                Returns different type of request parameters like form data, json
+                data, raw data, headers etc.
+            parameters:
+                - name: customheader
+                  in: header
+                  description: Header
+                  schema:
+                      type: string
+                  example: servebin-demo
+            responses:
+                "200":
+                    description: OK
+                    content: {}
+                "400":
+                    description: Bad Request
+                    content: {}
+                "404":
+                    description: Not Found
+                    content: {}
+                "500":
+                    description: Internal Server Error
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/response.HTTPError"
+    /headers:
+        get:
+            tags:
+                - Request inspection
+            summary: Return the incoming request's HTTP headers.
+            description: It returns the incoming request's HTTP headers.
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/response.HeaderResponse"
+    /html:
+        get:
+            tags:
+                - Response formats
+            summary: Returns a simple HTML document.
+            description: Returns a simple HTML document.
+            responses:
+                "200":
+                    description: OK
+                "404":
+                    description: Not Found
+                "406":
+                    description: Not Acceptable
+                "500":
+                    description: Internal Server Error
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/response.HTTPError"
+    /image:
+        get:
+            tags:
+                - Images
+            summary: Returns image as per the Accept header.
+            description: Returns a simple image of the type suggest by the Accept header.
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        image/png:
+                            schema:
+                                format: binary
+                        image/jpeg:
+                            schema:
+                                format: binary
+                        image/svg+xml:
+                            schema:
+                                format: binary
+                        image/gif:
+                            schema:
+                                format: binary
+                        image/webp:
+                            schema:
+                                format: binary
+                        image/tiff:
+                            schema:
+                                format: binary
+                        image/bmp:
+                            schema:
+                                format: binary
+                        image/apng:
+                            schema:
+                                format: binary
+                        image/avif:
+                            schema:
+                                format: binary
+                        image/x-icon:
+                            schema:
+                                format: binary
+                        image/*:
+                            schema:
+                                format: binary
+                "404":
+                    description: Not Found
+                "406":
+                    description: Not Acceptable
+                "500":
+                    description: Internal Server Error
+    /image/apng:
+        get:
+            tags:
+                - Images
+            summary: Returns a simple APNG image.
+            description: Returns a simple image of the APNG mime-type.
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        image/apng:
+                            schema:
+                                format: binary
+                "404":
+                    description: Not Found
+                "406":
+                    description: Not Acceptable
+                "500":
+                    description: Internal Server Error
+    /image/avif:
+        get:
+            tags:
+                - Images
+            summary: Returns a simple AVIF image.
+            description: Returns a simple image of the AVIF mime-type.
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        image/avif:
+                            schema:
+                                format: binary
+                "404":
+                    description: Not Found
+                "406":
+                    description: Not Acceptable
+                "500":
+                    description: Internal Server Error
+    /image/bmp:
+        get:
+            tags:
+                - Images
+            summary: Returns a simple BMP image.
+            description: Returns a simple image of the BMP mime-type.
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        image/bmp:
+                            schema:
+                                format: binary
+                "404":
+                    description: Not Found
+                "406":
+                    description: Not Acceptable
+                "500":
+                    description: Internal Server Error
+    /image/gif:
+        get:
+            tags:
+                - Images
+            summary: Returns a simple GIF image.
+            description: Returns a simple image of the GIF mime-type.
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        image/gif:
+                            schema:
+                                format: binary
+                "404":
+                    description: Not Found
+                "406":
+                    description: Not Acceptable
+                "500":
+                    description: Internal Server Error
+    /image/ico:
+        get:
+            tags:
+                - Images
+            summary: Returns a simple ICO image.
+            description: Returns a simple image of the ICO mime-type.
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        image/x-icon:
+                            schema:
+                                format: binary
+                "404":
+                    description: Not Found
+                "406":
+                    description: Not Acceptable
+                "500":
+                    description: Internal Server Error
+    /image/jpeg:
+        get:
+            tags:
+                - Images
+            summary: Returns a simple JPEG image.
+            description: Returns a simple image of the JPEG mime-type.
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        image/jpeg:
+                            schema:
+                                format: binary
+                "404":
+                    description: Not Found
+                "406":
+                    description: Not Acceptable
+                "500":
+                    description: Internal Server Error
+    /image/png:
+        get:
+            tags:
+                - Images
+            summary: Returns a simple PNG image.
+            description: Returns a simple image of the PNG mime-type.
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        image/png:
+                            schema:
+                                format: binary
+                "404":
+                    description: Not Found
+                "406":
+                    description: Not Acceptable
+                "500":
+                    description: Internal Server Error
+    /image/svg:
+        get:
+            tags:
+                - Images
+            summary: Returns a simple SVG image.
+            description: Returns a simple image of the SVG mime-type.
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        image/svg+xml:
+                            schema:
+                                format: binary
+                "404":
+                    description: Not Found
+                "406":
+                    description: Not Acceptable
+                "500":
+                    description: Internal Server Error
+    /image/tiff:
+        get:
+            tags:
+                - Images
+            summary: Returns a simple TIFF image.
+            description: Returns a simple image of the TIFF mime-type.
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        image/tiff:
+                            schema:
+                                format: binary
+                "404":
+                    description: Not Found
+                "406":
+                    description: Not Acceptable
+                "500":
+                    description: Internal Server Error
+    /image/webp:
+        get:
+            tags:
+                - Images
+            summary: Returns a simple WEBP image.
+            description: Returns a simple image of the WEBP mime-type.
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        image/webp:
+                            schema:
+                                format: binary
+                "404":
+                    description: Not Found
+                "406":
+                    description: Not Acceptable
+                "500":
+                    description: Internal Server Error
+    /ip:
+        get:
+            tags:
+                - Request inspection
+            summary: Get Request IP.
+            description: Returns the requester's IP Address.
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/response.IPResponse"
+    /json:
+        get:
+            tags:
+                - Response formats
+            summary: Returns a simple JSON document.
+            description: Returns a simple JSON document.
+            responses:
+                "200":
+                    description: OK
+                "404":
+                    description: Not Found
+                "406":
+                    description: Not Acceptable
+                    content: {}
+                "500":
+                    description: Internal Server Error
+                    content:
+                        text/plain:
+                            schema:
+                                $ref: "#/components/schemas/response.HTTPError"
+    /options:
+        options:
+            tags:
+                - HTTP Methods
+            summary: Returns the request parameters.
+            description:
+                Returns different type of request parameters like form data, json
+                data, raw data, headers etc.
+            parameters:
+                - name: customheader
+                  in: header
+                  description: Header
+                  schema:
+                      type: string
+                  example: servebin-demo
+            responses:
+                "200":
+                    description: OK
+                    content: {}
+                "400":
+                    description: Bad Request
+                    content: {}
+                "404":
+                    description: Not Found
+                    content: {}
+                "500":
+                    description: Internal Server Error
+                    content:
+                        "*/*":
+                            schema:
+                                $ref: "#/components/schemas/response.HTTPError"
+    /patch:
+        patch:
+            tags:
+                - HTTP Methods
+            summary: Returns the request parameters.
+            description:
+                Returns different type of request parameters like form data, json
+                data, raw data, headers etc.
+            parameters:
+                - name: customheader
+                  in: header
+                  description: Header
+                  schema:
+                      type: string
+                  example: servebin-demo
+                - name: queryparam
+                  in: query
+                  description: Query Paramater
+                  schema:
+                      type: string
+                  example: servebin
+            requestBody:
+                content:
+                    multipart/form-data:
+                        schema:
+                            type: object
+                            properties:
+                                body:
+                                    type: string
+                                    description: Body
+                                formdata:
+                                    type: string
+                                    description: Form Data
+                                    format: binary
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        "*/*":
+                            schema:
+                                $ref: "#/components/schemas/response.BodyDataResponse"
+                "400":
+                    description: Bad Request
+                    content: {}
+                "404":
+                    description: Not Found
+                    content: {}
+                "500":
+                    description: Internal Server Error
+                    content:
+                        "*/*":
+                            schema:
+                                $ref: "#/components/schemas/response.HTTPError"
+    /post:
+        post:
+            tags:
+                - HTTP Methods
+            summary: Returns the request parameters.
+            description:
+                Returns different type of request parameters like form data, json
+                data, raw data, headers etc.
+            parameters:
+                - name: customheader
+                  in: header
+                  description: Header
+                  schema:
+                      type: string
+                  example: servebin-demo
+                - name: queryparam
+                  in: query
+                  description: Query Paramater
+                  schema:
+                      type: string
+                  example: servebin
+            requestBody:
+                content:
+                    multipart/form-data:
+                        schema:
+                            type: object
+                            properties:
+                                body:
+                                    type: string
+                                    description: Body
+                                formdata:
+                                    type: string
+                                    description: Form Data
+                                    format: binary
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        "*/*":
+                            schema:
+                                $ref: "#/components/schemas/response.BodyDataResponse"
+                "400":
+                    description: Bad Request
+                    content: {}
+                "404":
+                    description: Not Found
+                    content: {}
+                "500":
+                    description: Internal Server Error
+                    content:
+                        "*/*":
+                            schema:
+                                $ref: "#/components/schemas/response.HTTPError"
+    /put:
+        put:
+            tags:
+                - HTTP Methods
+            summary: Returns the request parameters.
+            description:
+                Returns different type of request parameters like form data, json
+                data, raw data, headers etc.
+            parameters:
+                - name: customheader
+                  in: header
+                  description: Header
+                  schema:
+                      type: string
+                  example: servebin-demo
+                - name: queryparam
+                  in: query
+                  description: Query Paramater
+                  schema:
+                      type: string
+                  example: servebin
+            requestBody:
+                content:
+                    multipart/form-data:
+                        schema:
+                            type: object
+                            properties:
+                                body:
+                                    type: string
+                                    description: Body
+                                formdata:
+                                    type: string
+                                    description: Form Data
+                                    format: binary
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        "*/*":
+                            schema:
+                                $ref: "#/components/schemas/response.BodyDataResponse"
+                "400":
+                    description: Bad Request
+                    content: {}
+                "404":
+                    description: Not Found
+                    content: {}
+                "500":
+                    description: Internal Server Error
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/response.HTTPError"
+    /robots.txt:
+        get:
+            tags:
+                - Response formats
+            summary: Returns some robots.txt rules.
+            description: Returns some robots.txt rules.
+            responses:
+                "200":
+                    description: OK
+                "404":
+                    description: Not Found
+                "406":
+                    description: Not Acceptable
+                "500":
+                    description: Internal Server Error
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/response.HTTPError"
+    /status/{statuscode}:
+        get:
+            tags:
+                - Status Codes
+            summary: Return status code or random status code if more than one are given.
+            description: Returns the requester's IP Address.
+            parameters:
+                - name: statuscode
+                  in: path
+                  description: Status Code
+                  required: true
+                  schema:
+                      type: integer
+                  example: 200
+            responses:
+                "200":
+                    description: OK
+                "400":
+                    description: Bad Request
+                "404":
+                    description: Not Found
+                "500":
+                    description: Internal Server Error
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/response.HTTPError"
+        put:
+            tags:
+                - Status Codes
+            summary: Return status code or random status code if more than one are given.
+            description: Returns the requester's IP Address.
+            parameters:
+                - name: statuscode
+                  in: path
+                  description: Status Code
+                  required: true
+                  schema:
+                      type: integer
+                  example: 200
+            responses:
+                "200":
+                    description: OK
+                "400":
+                    description: Bad Request
+                "404":
+                    description: Not Found
+                "500":
+                    description: Internal Server Error
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/response.HTTPError"
+        post:
+            tags:
+                - Status Codes
+            summary: Return status code or random status code if more than one are given.
+            description: Returns the requester's IP Address.
+            parameters:
+                - name: statuscode
+                  in: path
+                  description: Status Code
+                  required: true
+                  schema:
+                      type: integer
+                  example: 200
+            responses:
+                "200":
+                    description: OK
+                "400":
+                    description: Bad Request
+                "404":
+                    description: Not Found
+                "500":
+                    description: Internal Server Error
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/response.HTTPError"
+        delete:
+            tags:
+                - Status Codes
+            summary: Return status code or random status code if more than one are given.
+            description: Returns the requester's IP Address.
+            parameters:
+                - name: statuscode
+                  in: path
+                  description: Status Code
+                  required: true
+                  schema:
+                      type: integer
+                  example: 200
+            responses:
+                "200":
+                    description: OK
+                "400":
+                    description: Bad Request
+                "404":
+                    description: Not Found
+                "500":
+                    description: Internal Server Error
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/response.HTTPError"
+        patch:
+            tags:
+                - Status Codes
+            summary: Return status code or random status code if more than one are given.
+            description: Returns the requester's IP Address.
+            parameters:
+                - name: statuscode
+                  in: path
+                  description: Status Code
+                  required: true
+                  schema:
+                      type: integer
+                  example: 200
+            responses:
+                "200":
+                    description: OK
+                "400":
+                    description: Bad Request
+                "404":
+                    description: Not Found
+                "500":
+                    description: Internal Server Error
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/response.HTTPError"
+    /user-agent:
+        get:
+            tags:
+                - Request inspection
+            summary: Return the incoming request's User-Agent header.
+            description: User-Agent header.
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/response.UserAgentResponse"
+    /xml:
+        get:
+            tags:
+                - Response formats
+            summary: Returns a simple XML document.
+            description: Returns a simple XML document.
+            responses:
+                "200":
+                    description: OK
+                "404":
+                    description: Not Found
+                    content: {}
+                "406":
+                    description: Not Acceptable
+                    content: {}
+                "500":
+                    description: Internal Server Error
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/response.HTTPError"
+    /zstd:
+        get:
+            tags:
+                - Response formats
+            summary: Returns Zstd-compressed data.
+            description: Returns Zstd-compressed data.
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/response.ZstdResponse"
+                "404":
+                    description: Not Found
+                "406":
+                    description: Not Acceptable
+                "500":
+                    description: Internal Server Error
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/response.HTTPError"
+    /absolute-redirect/{n}:
+        get:
+            tags:
+                - HTTPBin Compatibility
+            summary: Performs absolute redirects.
+            description: 302 absolute redirects n times.
+            parameters:
+                - name: n
+                  in: path
+                  description: Number of redirects
+                  required: true
+                  schema:
+                      type: integer
+                  example: 2
+            responses:
+                "302":
+                    description: Found
+                "400":
+                    description: Bad Request
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/response.HTTPError"
+    /anything:
+        get:
+            tags:
+                - HTTPBin Compatibility
+            summary: Returns request data for any method.
+            description: Returns request data, including method used.
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/response.HTTPBinRequestResponse"
+                "500":
+                    description: Internal Server Error
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/response.HTTPError"
+    /anything/{anything}:
+        get:
+            tags:
+                - HTTPBin Compatibility
+            summary: Returns request data for any method.
+            description: Returns request data, including method used.
+            parameters:
+                - name: anything
+                  in: path
+                  description: Anything
+                  required: true
+                  schema:
+                      type: string
+                  example: debug-request
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/response.HTTPBinRequestResponse"
+                "500":
+                    description: Internal Server Error
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/response.HTTPError"
+    /base64/{value}:
+        get:
+            tags:
+                - HTTPBin Compatibility
+            summary: Decodes a base64 string.
+            description: Decodes base64url-encoded text.
+            parameters:
+                - name: value
+                  in: path
+                  description: Base64 value to decode
+                  required: true
+                  schema:
+                      type: string
+                  example: U2VydmVCaW4
+            responses:
+                "200":
+                    description: OK
+                "400":
+                    description: Bad Request
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/response.HTTPError"
+    /basic-auth/{user}/{passwd}:
+        get:
+            tags:
+                - HTTPBin Compatibility
+            summary: Challenges HTTP basic auth.
+            description: Returns authenticated user data when the credentials match.
+            parameters:
+                - name: user
+                  in: path
+                  description: Username
+                  required: true
+                  schema:
+                      type: string
+                  example: user
+                - name: passwd
+                  in: path
+                  description: Password
+                  required: true
+                  schema:
+                      type: string
+                  example: passwd
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/response.AuthResponse"
+                "401":
+                    description: Unauthorized
+    /bytes/{n}:
+        get:
+            tags:
+                - HTTPBin Compatibility
+            summary: Generates random bytes.
+            description: Generates n random bytes of binary data.
+            parameters:
+                - name: n
+                  in: path
+                  description: Number of bytes
+                  required: true
+                  schema:
+                      type: integer
+                  example: 16
+                - name: seed
+                  in: query
+                  description: Seed for deterministic bytes
+                  schema:
+                      type: integer
+                      format: int64
+                  example: 123
+            responses:
+                "200":
+                    description: OK
+                "400":
+                    description: Bad Request
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/response.HTTPError"
+                "500":
+                    description: Internal Server Error
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/response.HTTPError"
+    /cache:
+        get:
+            tags:
+                - HTTPBin Compatibility
+            summary: Returns a cacheable response.
+            description: Returns 304 when If-Modified-Since or If-None-Match is provided.
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/response.HTTPBinRequestResponse"
+                "304":
+                    description: Not Modified
+    /cache/{n}:
+        get:
+            tags:
+                - HTTPBin Compatibility
+            summary: Sets a Cache-Control header.
+            description: Sets Cache-Control for n seconds.
+            parameters:
+                - name: n
+                  in: path
+                  description: Cache duration in seconds
+                  required: true
+                  schema:
+                      type: integer
+                  example: 60
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/response.HTTPBinRequestResponse"
+                "400":
+                    description: Bad Request
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/response.HTTPError"
+    /cookies:
+        get:
+            tags:
+                - HTTPBin Compatibility
+            summary: Returns cookie data.
+            description: Returns cookie data from the request.
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/response.CookiesResponse"
+    /cookies/delete:
+        get:
+            tags:
+                - HTTPBin Compatibility
+            summary: Deletes one or more simple cookies.
+            description: Deletes cookies named in query parameters and redirects to /cookies.
+            responses:
+                "302":
+                    description: Found
+    /cookies/set:
+        get:
+            tags:
+                - HTTPBin Compatibility
+            summary: Sets one or more simple cookies.
+            description: Sets cookies from query parameters and redirects to /cookies.
+            responses:
+                "302":
+                    description: Found
+    /delay/{n}:
+        get:
+            tags:
+                - HTTPBin Compatibility
+            summary: Delays the response.
+            description: Delays responding for min(n, 10) seconds.
+            parameters:
+                - name: n
+                  in: path
+                  description: Delay duration in seconds
+                  required: true
+                  schema:
+                      type: integer
+                  example: 3
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/response.HTTPBinRequestResponse"
+                "400":
+                    description: Bad Request
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/response.HTTPError"
+    /digest-auth/{qop}/{user}/{passwd}:
+        get:
+            tags:
+                - HTTPBin Compatibility
+            summary: Challenges HTTP digest auth.
+            description: Supports qop=auth with MD5 or SHA-256.
+            parameters:
+                - name: qop
+                  in: path
+                  description: Digest quality of protection
+                  required: true
+                  schema:
+                      type: string
+                  example: auth
+                - name: user
+                  in: path
+                  description: Username
+                  required: true
+                  schema:
+                      type: string
+                  example: user
+                - name: passwd
+                  in: path
+                  description: Password
+                  required: true
+                  schema:
+                      type: string
+                  example: passwd
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/response.AuthResponse"
+                "400":
+                    description: Bad Request
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/response.HTTPError"
+                "401":
+                    description: Unauthorized
+    /digest-auth/{qop}/{user}/{passwd}/{algorithm}:
+        get:
+            tags:
+                - HTTPBin Compatibility
+            summary: Challenges HTTP digest auth.
+            description: Supports qop=auth with MD5 or SHA-256.
+            parameters:
+                - name: qop
+                  in: path
+                  description: Digest quality of protection
+                  required: true
+                  schema:
+                      type: string
+                  example: auth
+                - name: user
+                  in: path
+                  description: Username
+                  required: true
+                  schema:
+                      type: string
+                  example: user
+                - name: passwd
+                  in: path
+                  description: Password
+                  required: true
+                  schema:
+                      type: string
+                  example: passwd
+                - name: algorithm
+                  in: path
+                  description: Digest algorithm
+                  required: true
+                  schema:
+                      type: string
+                  example: MD5
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/response.AuthResponse"
+                "400":
+                    description: Bad Request
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/response.HTTPError"
+                "401":
+                    description: Unauthorized
+    /drip:
+        get:
+            tags:
+                - HTTPBin Compatibility
+            summary: Drips bytes over a duration.
+            description: Drips data over a duration after an optional initial delay.
+            responses:
+                "200":
+                    description: OK
+                "400":
+                    description: Bad Request
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/response.HTTPError"
+            parameters:
+                - name: numbytes
+                  in: query
+                  description: Number of bytes to drip
+                  schema:
+                      type: integer
+                      default: 10
+                  example: 10
+                - name: duration
+                  in: query
+                  description: Duration in seconds
+                  schema:
+                      type: number
+                      default: 2
+                  example: 2
+                - name: delay
+                  in: query
+                  description: Initial delay in seconds
+                  schema:
+                      type: number
+                      default: 0
+                  example: 0
+                - name: code
+                  in: query
+                  description: HTTP status code to return
+                  schema:
+                      type: integer
+                      default: 200
+                  example: 200
+    /encoding/utf8:
+        get:
+            tags:
+                - HTTPBin Compatibility
+            summary: Returns a UTF-8 sample page.
+            description: Returns a page containing UTF-8 data.
+            responses:
+                "200":
+                    description: OK
+                "500":
+                    description: Internal Server Error
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/response.HTTPError"
+    /etag/{etag}:
+        get:
+            tags:
+                - HTTPBin Compatibility
+            summary: Returns an ETag-aware response.
+            description: Responds to If-None-Match with 304 and If-Match with 412 when appropriate.
+            parameters:
+                - name: etag
+                  in: path
+                  description: ETag value
+                  required: true
+                  schema:
+                      type: string
+                  example: servebin-v1
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/response.HTTPBinRequestResponse"
+                "304":
+                    description: Not Modified
+                "412":
+                    description: Precondition Failed
+    /forms/post:
+        get:
+            tags:
+                - HTTPBin Compatibility
+            summary: Returns an HTML form.
+            description: Returns an HTML form that submits to /post.
+            responses:
+                "200":
+                    description: OK
+                "500":
+                    description: Internal Server Error
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/response.HTTPError"
+    /hidden-basic-auth/{user}/{passwd}:
+        get:
+            tags:
+                - HTTPBin Compatibility
+            summary: 404'd basic auth.
+            description:
+                Returns authenticated user data when the credentials match, otherwise
+                404s.
+            parameters:
+                - name: user
+                  in: path
+                  description: Username
+                  required: true
+                  schema:
+                      type: string
+                  example: user
+                - name: passwd
+                  in: path
+                  description: Password
+                  required: true
+                  schema:
+                      type: string
+                  example: passwd
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/response.AuthResponse"
+                "404":
+                    description: Not Found
+    /links/{n}:
+        get:
+            tags:
+                - HTTPBin Compatibility
+            summary: Returns a page of HTML links.
+            description: Returns a page containing n HTML links.
+            parameters:
+                - name: n
+                  in: path
+                  description: Total number of links
+                  required: true
+                  schema:
+                      type: integer
+                  example: 5
+            responses:
+                "200":
+                    description: OK
+                "400":
+                    description: Bad Request
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/response.HTTPError"
+    /links/{n}/{offset}:
+        get:
+            tags:
+                - HTTPBin Compatibility
+            summary: Returns a page of HTML links.
+            description: Returns a page containing n HTML links.
+            parameters:
+                - name: n
+                  in: path
+                  description: Total number of links
+                  required: true
+                  schema:
+                      type: integer
+                  example: 5
+                - name: offset
+                  in: path
+                  description: Link offset to highlight
+                  required: true
+                  schema:
+                      type: integer
+                  example: 0
+            responses:
+                "200":
+                    description: OK
+                "400":
+                    description: Bad Request
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/response.HTTPError"
+    /range/{n}:
+        get:
+            tags:
+                - HTTPBin Compatibility
+            summary: Returns a range-enabled byte stream.
+            description: Streams n bytes and honors Range requests.
+            parameters:
+                - name: n
+                  in: path
+                  description: Total number of bytes
+                  required: true
+                  schema:
+                      type: integer
+                  example: 1024
+                - name: chunk_size
+                  in: query
+                  description: Chunk size in bytes
+                  schema:
+                      type: integer
+                  example: 256
+                - name: duration
+                  in: query
+                  description: Duration in seconds
+                  schema:
+                      type: number
+                      default: 0
+                  example: 0
+                - name: Range
+                  in: header
+                  description: Byte range request header
+                  schema:
+                      type: string
+                  example: bytes=0-99
+            responses:
+                "200":
+                    description: OK
+                "400":
+                    description: Bad Request
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/response.HTTPError"
+                "416":
+                    description: Requested Range Not Satisfiable
+    /redirect-to:
+        get:
+            tags:
+                - HTTPBin Compatibility
+            summary: Redirects to the requested URL.
+            description: Redirects to the url query parameter using the optional status_code.
+            parameters:
+                - name: url
+                  in: query
+                  description: Target URL
+                  required: true
+                  schema:
+                      type: string
+                  example: https://servebin.dev/get
+                - name: status_code
+                  in: query
+                  description: Redirect status code
+                  schema:
+                      type: integer
+                      default: 302
+                  example: 302
+            responses:
+                "302":
+                    description: Found
+                "400":
+                    description: Bad Request
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/response.HTTPError"
+    /redirect/{n}:
+        get:
+            tags:
+                - HTTPBin Compatibility
+            summary: Redirects multiple times.
+            description: 302 redirects n times.
+            parameters:
+                - name: n
+                  in: path
+                  description: Number of redirects
+                  required: true
+                  schema:
+                      type: integer
+                  example: 2
+            responses:
+                "302":
+                    description: Found
+                "400":
+                    description: Bad Request
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/response.HTTPError"
+    /relative-redirect/{n}:
+        get:
+            tags:
+                - HTTPBin Compatibility
+            summary: Performs relative redirects.
+            description: 302 relative redirects n times.
+            parameters:
+                - name: n
+                  in: path
+                  description: Number of redirects
+                  required: true
+                  schema:
+                      type: integer
+                  example: 2
+            responses:
+                "302":
+                    description: Found
+                "400":
+                    description: Bad Request
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/response.HTTPError"
+    /response-headers:
+        get:
+            tags:
+                - HTTPBin Compatibility
+            summary: Returns arbitrary response headers.
+            description: Returns given response headers.
+            responses:
+                "200":
+                    description: OK
+                "400":
+                    description: Bad Request
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/response.HTTPError"
+    /stream-bytes/{n}:
+        get:
+            tags:
+                - HTTPBin Compatibility
+            summary: Streams random bytes.
+            description: Streams n random bytes of binary data in chunked encoding.
+            parameters:
+                - name: n
+                  in: path
+                  description: Number of bytes
+                  required: true
+                  schema:
+                      type: integer
+                  example: 16
+                - name: chunk_size
+                  in: query
+                  description: Chunk size in bytes
+                  schema:
+                      type: integer
+                      default: 10
+                  example: 4
+                - name: seed
+                  in: query
+                  description: Seed for deterministic bytes
+                  schema:
+                      type: integer
+                      format: int64
+                  example: 123
+            responses:
+                "200":
+                    description: OK
+                "400":
+                    description: Bad Request
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/response.HTTPError"
+                "500":
+                    description: Internal Server Error
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/response.HTTPError"
+    /stream/{n}:
+        get:
+            tags:
+                - HTTPBin Compatibility
+            summary: Streams request data as JSON lines.
+            description: Streams min(n, 100) JSON lines.
+            parameters:
+                - name: n
+                  in: path
+                  description: Number of lines to stream
+                  required: true
+                  schema:
+                      type: integer
+                  example: 3
+            responses:
+                "200":
+                    description: OK
+                "400":
+                    description: Bad Request
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/response.HTTPError"
+    /uuid:
+        get:
+            tags:
+                - HTTPBin Compatibility
+            summary: Returns a UUID4.
+            description: Returns a randomly generated UUID4.
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/response.UUIDResponse"
+                "500":
+                    description: Internal Server Error
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/response.HTTPError"
 components:
-  schemas:
-    response.BodyDataResponse:
-      type: object
-      properties:
-        arg:
-          type: object
-          additionalProperties: true
-        data:
-          type: object
-        files:
-          type: object
-        form:
-          type: object
-        headers:
-          type: object
-          additionalProperties:
-            type: string
-        ip:
-          type: array
-          items:
+    schemas:
+        response.BodyDataResponse:
             type: object
-        json:
-          type: object
-        method:
-          type: string
-        url:
-          type: string
-    response.BrotliResponse:
-      type: object
-      properties:
-        compressed:
-          type: boolean
-          example: true
-        headers:
-          type: object
-          additionalProperties:
-            type: string
-        ip:
-          type: array
-          items:
+            properties:
+                arg:
+                    type: object
+                    additionalProperties: true
+                data:
+                    type: object
+                files:
+                    type: object
+                form:
+                    type: object
+                headers:
+                    type: object
+                    additionalProperties:
+                        type: string
+                ip:
+                    type: array
+                    items:
+                        type: object
+                json:
+                    type: object
+                method:
+                    type: string
+                url:
+                    type: string
+        response.BrotliResponse:
             type: object
-    response.DeflateResponse:
-      type: object
-      properties:
-        deflated:
-          type: boolean
-          example: true
-        headers:
-          type: object
-          additionalProperties:
-            type: string
-        ip:
-          type: array
-          items:
+            properties:
+                compressed:
+                    type: boolean
+                    example: true
+                headers:
+                    type: object
+                    additionalProperties:
+                        type: string
+                ip:
+                    type: array
+                    items:
+                        type: object
+        response.DeflateResponse:
             type: object
-    response.EmptyResponse:
-      type: object
-      properties:
-        arg:
-          type: object
-          additionalProperties: true
-        headers:
-          type: object
-          additionalProperties:
-            type: string
-        ip:
-          type: array
-          items:
+            properties:
+                deflated:
+                    type: boolean
+                    example: true
+                headers:
+                    type: object
+                    additionalProperties:
+                        type: string
+                ip:
+                    type: array
+                    items:
+                        type: object
+        response.EmptyResponse:
             type: object
-        method:
-          type: string
-        url:
-          type: string
-    response.GzipResponse:
-      type: object
-      properties:
-        gzipped:
-          type: boolean
-          example: true
-        headers:
-          type: object
-          additionalProperties:
-            type: string
-        ip:
-          type: array
-          items:
+            properties:
+                arg:
+                    type: object
+                    additionalProperties: true
+                headers:
+                    type: object
+                    additionalProperties:
+                        type: string
+                ip:
+                    type: array
+                    items:
+                        type: object
+                method:
+                    type: string
+                url:
+                    type: string
+        response.GzipResponse:
             type: object
-    response.HTTPError:
-      type: object
-      properties:
-        code:
-          type: integer
-          example: 400
-        message:
-          type: string
-          example: status bad request
-    response.HeaderResponse:
-      type: object
-      properties:
-        headers:
-          type: object
-          additionalProperties:
-            type: string
-    response.IPResponse:
-      type: object
-      properties:
-        ip:
-          type: array
-          items:
+            properties:
+                gzipped:
+                    type: boolean
+                    example: true
+                headers:
+                    type: object
+                    additionalProperties:
+                        type: string
+                ip:
+                    type: array
+                    items:
+                        type: object
+        response.HTTPError:
             type: object
-    response.UserAgentResponse:
-      type: object
-      properties:
-        user-agent:
-          type: string
-    response.ZstdResponse:
-      type: object
-      properties:
-        compressed:
-          type: boolean
-          example: true
-        headers:
-          type: object
-          additionalProperties:
-            type: string
-        ip:
-          type: array
-          items:
+            properties:
+                code:
+                    type: integer
+                    example: 400
+                message:
+                    type: string
+                    example: status bad request
+        response.HeaderResponse:
             type: object
+            properties:
+                headers:
+                    type: object
+                    additionalProperties:
+                        type: string
+        response.IPResponse:
+            type: object
+            properties:
+                ip:
+                    type: array
+                    items:
+                        type: object
+        response.UserAgentResponse:
+            type: object
+            properties:
+                user-agent:
+                    type: string
+        response.ZstdResponse:
+            type: object
+            properties:
+                compressed:
+                    type: boolean
+                    example: true
+                headers:
+                    type: object
+                    additionalProperties:
+                        type: string
+                ip:
+                    type: array
+                    items:
+                        type: object
+        response.AuthResponse:
+            type: object
+            properties:
+                authenticated:
+                    type: boolean
+                user:
+                    type: string
+        response.CookiesResponse:
+            type: object
+            properties:
+                cookies:
+                    type: object
+                    additionalProperties:
+                        type: string
+        response.HTTPBinRequestResponse:
+            type: object
+            properties:
+                args:
+                    type: object
+                    additionalProperties: true
+                data:
+                    type: string
+                files:
+                    type: object
+                    additionalProperties: true
+                form:
+                    type: object
+                    additionalProperties: true
+                headers:
+                    type: object
+                    additionalProperties:
+                        type: string
+                json:
+                    type: object
+                method:
+                    type: string
+                origin:
+                    type: string
+                url:
+                    type: string
+        response.UUIDResponse:
+            type: object
+            properties:
+                uuid:
+                    type: string
 x-original-swagger-version: "2.0"

@@ -1,4 +1,4 @@
-// Copyright 2024 The ServeBin AUTHORS. All rights reserved.
+// Copyright 2026 The ServeBin AUTHORS. All rights reserved.
 //
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
@@ -9,11 +9,6 @@ import (
 	"ServeBin/helper"
 	"bytes"
 	"fmt"
-	"github.com/biessek/golang-ico"
-	"github.com/kettek/apng"
-	"github.com/nickalie/go-webpbin"
-	"golang.org/x/image/bmp"
-	"golang.org/x/image/tiff"
 	"image"
 	"image/color"
 	"image/draw"
@@ -23,6 +18,12 @@ import (
 	"os"
 	"os/exec"
 	"time"
+
+	ico "github.com/biessek/golang-ico"
+	"github.com/kettek/apng"
+	"github.com/nickalie/go-webpbin"
+	"golang.org/x/image/bmp"
+	"golang.org/x/image/tiff"
 )
 
 type MyError struct{}

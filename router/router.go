@@ -1,4 +1,4 @@
-// Copyright 2024 The ServeBin AUTHORS. All rights reserved.
+// Copyright 2026 The ServeBin AUTHORS. All rights reserved.
 //
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
@@ -9,11 +9,12 @@ import (
 	"ServeBin"
 	"ServeBin/controller"
 	"ServeBin/middleware"
+	"net/http"
+	"os"
+
 	"github.com/gin-gonic/gin"
 	swaggerFiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
-	"net/http"
-	"os"
 )
 
 func NewRouter(apiController *controller.APIController) *gin.Engine {
@@ -52,6 +53,7 @@ func NewRouter(apiController *controller.APIController) *gin.Engine {
 	router.GET("/heartbeat", apiController.HeartBeat)
 
 	router.GET("/ip", apiController.GetIP)
+	router.GET("/uuid", apiController.GetUUID)
 	router.GET("/headers", apiController.GetHeaders)
 	router.GET("/user-agent", apiController.GetUserAgent)
 
@@ -61,6 +63,10 @@ func NewRouter(apiController *controller.APIController) *gin.Engine {
 	router.GET("/image", apiController.GetImages)
 	router.GET("/image/:imagetype", apiController.GetImages)
 
+	router.Any("/anything", apiController.Anything)
+	router.Any("/anything/*anything", apiController.Anything)
+	router.GET("/base64/*value", apiController.GetBase64)
+	router.GET("/encoding/utf8", apiController.GetUTF8)
 	router.GET("/xml", apiController.GetXML)
 	router.GET("/html", apiController.GetHTML)
 	router.GET("/json", apiController.GetJson)
@@ -70,6 +76,30 @@ func NewRouter(apiController *controller.APIController) *gin.Engine {
 	router.GET("/deflate", apiController.Getdeflate)
 	router.GET("/zstd", apiController.Getzstd)
 	router.GET("/robots.txt", apiController.GetRobotsTxt)
+	router.GET("/response-headers", apiController.GetResponseHeaders)
+	router.GET("/redirect/:n", apiController.GetRedirect)
+	router.GET("/redirect-to", apiController.GetRedirectTo)
+	router.GET("/relative-redirect/:n", apiController.GetRelativeRedirect)
+	router.GET("/absolute-redirect/:n", apiController.GetAbsoluteRedirect)
+	router.GET("/cookies", apiController.GetCookies)
+	router.GET("/cookies/set", apiController.SetCookies)
+	router.GET("/cookies/delete", apiController.DeleteCookies)
+	router.GET("/basic-auth/:user/:passwd", apiController.GetBasicAuth)
+	router.GET("/hidden-basic-auth/:user/:passwd", apiController.GetHiddenBasicAuth)
+	router.GET("/digest-auth/:qop/:user/:passwd", apiController.GetDigestAuth)
+	router.GET("/digest-auth/:qop/:user/:passwd/:algorithm", apiController.GetDigestAuth)
+	router.GET("/stream/:n", apiController.GetStream)
+	router.Any("/delay/:n", apiController.GetDelay)
+	router.GET("/drip", apiController.GetDrip)
+	router.GET("/range/:n", apiController.GetRange)
+	router.GET("/cache", apiController.GetCache)
+	router.GET("/etag/:etag", apiController.GetETag)
+	router.GET("/cache/:n", apiController.GetCacheFor)
+	router.GET("/bytes/:n", apiController.GetBytes)
+	router.GET("/stream-bytes/:n", apiController.GetStreamBytes)
+	router.GET("/links/:n", apiController.GetLinks)
+	router.GET("/links/:n/:offset", apiController.GetLinks)
+	router.GET("/forms/post", apiController.GetFormsPost)
 
 	router.HEAD("/head", apiController.ResponseHeaderData)
 	router.GET("/get", apiController.ResponseData)

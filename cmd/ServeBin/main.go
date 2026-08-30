@@ -1,4 +1,4 @@
-// Copyright 2024 The ServeBin AUTHORS. All rights reserved.
+// Copyright 2026 The ServeBin AUTHORS. All rights reserved.
 //
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
@@ -11,17 +11,20 @@ import (
 	"ServeBin/helper"
 	"ServeBin/router"
 	"ServeBin/service"
-	"github.com/go-playground/validator/v10"
-	"github.com/joho/godotenv"
 	"log"
 	"net/http"
 	"os"
+
+	"github.com/go-playground/validator/v10"
+	"github.com/joho/godotenv"
 )
 
 // @title           	ServeBin
-// @version         	v1.2.0
+// @version         	v1.3.0
 // @description			Welcome to ServeBin documentation! ServeBin is a cutting-edge HTTP testing and debugging tool, built with the latest technologies in Go. This documentation provides comprehensive details about the endpoints, parameters, and responses offered by ServeBin, empowering developers to streamline their testing workflows and ensure the reliability of their applications. Explore the various features and capabilities of ServeBin to optimize your development process and elevate your HTTP testing experience.
 // @termsOfService  	https://servebin.dev/
+
+// @contact.email		contact@mrayush.me
 
 // @license.name  		BSD 3-Clause
 // @license.url  		https://github.com/AyushAgnihotri2025/ServeBin/blob/master/LICENSE

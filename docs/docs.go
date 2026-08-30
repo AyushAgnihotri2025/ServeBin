@@ -10,7 +10,7 @@ const docTemplate = `{
         "description": "{{escape .Description}}",
         "title": "{{.Title}}",
         "termsOfService": "https://servebin.dev/",
-        "contact":  {
+        "contact": {
             "email": "contact@mrayush.me"
         },
         "license": {
@@ -22,17 +22,17 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "servers": [
-      {
-        "url": "https://servebin.dev/"
-      },
-      {
-        "url": "https://s1.servebin.dev/"
-      },
-      {
-        "url": "https://s2.servebin.dev/"
-      }
+        {
+            "url": "https://servebin.dev/"
+        },
+        {
+            "url": "https://s1.servebin.dev/"
+        },
+        {
+            "url": "https://s2.servebin.dev/"
+        }
     ],
-	"tags": [
+    "tags": [
         {
             "name": "Status Codes",
             "description": "Generates responses with given status code"
@@ -52,6 +52,10 @@ const docTemplate = `{
         {
             "name": "HTTP Methods",
             "description": "Testing different HTTP verbs"
+        },
+        {
+            "name": "HTTPBin Compatibility",
+            "description": "HTTPBin-compatible utility endpoints"
         }
     ],
     "paths": {
@@ -173,7 +177,8 @@ const docTemplate = `{
                         "description": "Header",
                         "schema": {
                             "type": "string"
-                        }
+                        },
+                        "example": "servebin-demo"
                     },
                     {
                         "name": "queryparam",
@@ -181,7 +186,8 @@ const docTemplate = `{
                         "description": "Query Paramater",
                         "schema": {
                             "type": "string"
-                        }
+                        },
+                        "example": "servebin"
                     }
                 ],
                 "responses": {
@@ -268,7 +274,8 @@ const docTemplate = `{
                         "description": "Header",
                         "schema": {
                             "type": "string"
-                        }
+                        },
+                        "example": "servebin-demo"
                     }
                 ],
                 "responses": {
@@ -794,7 +801,8 @@ const docTemplate = `{
                         "description": "Header",
                         "schema": {
                             "type": "string"
-                        }
+                        },
+                        "example": "servebin-demo"
                     }
                 ],
                 "responses": {
@@ -837,7 +845,8 @@ const docTemplate = `{
                         "description": "Header",
                         "schema": {
                             "type": "string"
-                        }
+                        },
+                        "example": "servebin-demo"
                     },
                     {
                         "name": "queryparam",
@@ -845,7 +854,8 @@ const docTemplate = `{
                         "description": "Query Paramater",
                         "schema": {
                             "type": "string"
-                        }
+                        },
+                        "example": "servebin"
                     }
                 ],
                 "requestBody": {
@@ -914,7 +924,8 @@ const docTemplate = `{
                         "description": "Header",
                         "schema": {
                             "type": "string"
-                        }
+                        },
+                        "example": "servebin-demo"
                     },
                     {
                         "name": "queryparam",
@@ -922,7 +933,8 @@ const docTemplate = `{
                         "description": "Query Paramater",
                         "schema": {
                             "type": "string"
-                        }
+                        },
+                        "example": "servebin"
                     }
                 ],
                 "requestBody": {
@@ -991,7 +1003,8 @@ const docTemplate = `{
                         "description": "Header",
                         "schema": {
                             "type": "string"
-                        }
+                        },
+                        "example": "servebin-demo"
                     },
                     {
                         "name": "queryparam",
@@ -999,7 +1012,8 @@ const docTemplate = `{
                         "description": "Query Paramater",
                         "schema": {
                             "type": "string"
-                        }
+                        },
+                        "example": "servebin"
                     }
                 ],
                 "requestBody": {
@@ -1099,7 +1113,8 @@ const docTemplate = `{
                         "required": true,
                         "schema": {
                             "type": "integer"
-                        }
+                        },
+                        "example": 200
                     }
                 ],
                 "responses": {
@@ -1138,7 +1153,8 @@ const docTemplate = `{
                         "required": true,
                         "schema": {
                             "type": "integer"
-                        }
+                        },
+                        "example": 200
                     }
                 ],
                 "responses": {
@@ -1177,7 +1193,8 @@ const docTemplate = `{
                         "required": true,
                         "schema": {
                             "type": "integer"
-                        }
+                        },
+                        "example": 200
                     }
                 ],
                 "responses": {
@@ -1216,7 +1233,8 @@ const docTemplate = `{
                         "required": true,
                         "schema": {
                             "type": "integer"
-                        }
+                        },
+                        "example": 200
                     }
                 ],
                 "responses": {
@@ -1255,7 +1273,8 @@ const docTemplate = `{
                         "required": true,
                         "schema": {
                             "type": "integer"
-                        }
+                        },
+                        "example": 200
                     }
                 ],
                 "responses": {
@@ -1357,6 +1376,1178 @@ const docTemplate = `{
                     },
                     "406": {
                         "description": "Not Acceptable"
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/response.HTTPError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/absolute-redirect/{n}": {
+            "get": {
+                "tags": [
+                    "HTTPBin Compatibility"
+                ],
+                "summary": "Performs absolute redirects.",
+                "description": "302 absolute redirects n times.",
+                "responses": {
+                    "302": {
+                        "description": "Found"
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/response.HTTPError"
+                                }
+                            }
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "n",
+                        "in": "path",
+                        "description": "Number of redirects",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "example": 2
+                    }
+                ]
+            }
+        },
+        "/anything": {
+            "get": {
+                "tags": [
+                    "HTTPBin Compatibility"
+                ],
+                "summary": "Returns request data for any method.",
+                "description": "Returns request data, including method used.",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/response.HTTPBinRequestResponse"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/response.HTTPError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/anything/{anything}": {
+            "get": {
+                "tags": [
+                    "HTTPBin Compatibility"
+                ],
+                "summary": "Returns request data for any method.",
+                "description": "Returns request data, including method used.",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/response.HTTPBinRequestResponse"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/response.HTTPError"
+                                }
+                            }
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "anything",
+                        "in": "path",
+                        "description": "Anything",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "debug-request"
+                    }
+                ]
+            }
+        },
+        "/base64/{value}": {
+            "get": {
+                "tags": [
+                    "HTTPBin Compatibility"
+                ],
+                "summary": "Decodes a base64 string.",
+                "description": "Decodes base64url-encoded text.",
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/response.HTTPError"
+                                }
+                            }
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "value",
+                        "in": "path",
+                        "description": "Base64 value to decode",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "U2VydmVCaW4"
+                    }
+                ]
+            }
+        },
+        "/basic-auth/{user}/{passwd}": {
+            "get": {
+                "tags": [
+                    "HTTPBin Compatibility"
+                ],
+                "summary": "Challenges HTTP basic auth.",
+                "description": "Returns authenticated user data when the credentials match.",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/response.AuthResponse"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "user",
+                        "in": "path",
+                        "description": "Username",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "user"
+                    },
+                    {
+                        "name": "passwd",
+                        "in": "path",
+                        "description": "Password",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "passwd"
+                    }
+                ]
+            }
+        },
+        "/bytes/{n}": {
+            "get": {
+                "tags": [
+                    "HTTPBin Compatibility"
+                ],
+                "summary": "Generates random bytes.",
+                "description": "Generates n random bytes of binary data.",
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/response.HTTPError"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/response.HTTPError"
+                                }
+                            }
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "n",
+                        "in": "path",
+                        "description": "Number of bytes",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "example": 16
+                    },
+                    {
+                        "name": "seed",
+                        "in": "query",
+                        "description": "Seed for deterministic bytes",
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        },
+                        "example": 123
+                    }
+                ]
+            }
+        },
+        "/cache": {
+            "get": {
+                "tags": [
+                    "HTTPBin Compatibility"
+                ],
+                "summary": "Returns a cacheable response.",
+                "description": "Returns 304 when If-Modified-Since or If-None-Match is provided.",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/response.HTTPBinRequestResponse"
+                                }
+                            }
+                        }
+                    },
+                    "304": {
+                        "description": "Not Modified"
+                    }
+                }
+            }
+        },
+        "/cache/{n}": {
+            "get": {
+                "tags": [
+                    "HTTPBin Compatibility"
+                ],
+                "summary": "Sets a Cache-Control header.",
+                "description": "Sets Cache-Control for n seconds.",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/response.HTTPBinRequestResponse"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/response.HTTPError"
+                                }
+                            }
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "n",
+                        "in": "path",
+                        "description": "Cache duration in seconds",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "example": 60
+                    }
+                ]
+            }
+        },
+        "/cookies": {
+            "get": {
+                "tags": [
+                    "HTTPBin Compatibility"
+                ],
+                "summary": "Returns cookie data.",
+                "description": "Returns cookie data from the request.",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/response.CookiesResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/cookies/delete": {
+            "get": {
+                "tags": [
+                    "HTTPBin Compatibility"
+                ],
+                "summary": "Deletes one or more simple cookies.",
+                "description": "Deletes cookies named in query parameters and redirects to /cookies.",
+                "responses": {
+                    "302": {
+                        "description": "Found"
+                    }
+                }
+            }
+        },
+        "/cookies/set": {
+            "get": {
+                "tags": [
+                    "HTTPBin Compatibility"
+                ],
+                "summary": "Sets one or more simple cookies.",
+                "description": "Sets cookies from query parameters and redirects to /cookies.",
+                "responses": {
+                    "302": {
+                        "description": "Found"
+                    }
+                }
+            }
+        },
+        "/delay/{n}": {
+            "get": {
+                "tags": [
+                    "HTTPBin Compatibility"
+                ],
+                "summary": "Delays the response.",
+                "description": "Delays responding for min(n, 10) seconds.",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/response.HTTPBinRequestResponse"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/response.HTTPError"
+                                }
+                            }
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "n",
+                        "in": "path",
+                        "description": "Delay duration in seconds",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "example": 3
+                    }
+                ]
+            }
+        },
+        "/digest-auth/{qop}/{user}/{passwd}": {
+            "get": {
+                "tags": [
+                    "HTTPBin Compatibility"
+                ],
+                "summary": "Challenges HTTP digest auth.",
+                "description": "Supports qop=auth with MD5 or SHA-256.",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/response.AuthResponse"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/response.HTTPError"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "qop",
+                        "in": "path",
+                        "description": "Digest quality of protection",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "auth"
+                    },
+                    {
+                        "name": "user",
+                        "in": "path",
+                        "description": "Username",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "user"
+                    },
+                    {
+                        "name": "passwd",
+                        "in": "path",
+                        "description": "Password",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "passwd"
+                    }
+                ]
+            }
+        },
+        "/digest-auth/{qop}/{user}/{passwd}/{algorithm}": {
+            "get": {
+                "tags": [
+                    "HTTPBin Compatibility"
+                ],
+                "summary": "Challenges HTTP digest auth.",
+                "description": "Supports qop=auth with MD5 or SHA-256.",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/response.AuthResponse"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/response.HTTPError"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "qop",
+                        "in": "path",
+                        "description": "Digest quality of protection",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "auth"
+                    },
+                    {
+                        "name": "user",
+                        "in": "path",
+                        "description": "Username",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "user"
+                    },
+                    {
+                        "name": "passwd",
+                        "in": "path",
+                        "description": "Password",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "passwd"
+                    },
+                    {
+                        "name": "algorithm",
+                        "in": "path",
+                        "description": "Digest algorithm",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "MD5"
+                    }
+                ]
+            }
+        },
+        "/drip": {
+            "get": {
+                "tags": [
+                    "HTTPBin Compatibility"
+                ],
+                "summary": "Drips bytes over a duration.",
+                "description": "Drips data over a duration after an optional initial delay.",
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/response.HTTPError"
+                                }
+                            }
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "numbytes",
+                        "in": "query",
+                        "description": "Number of bytes to drip",
+                        "schema": {
+                            "type": "integer",
+                            "default": 10
+                        },
+                        "example": 10
+                    },
+                    {
+                        "name": "duration",
+                        "in": "query",
+                        "description": "Duration in seconds",
+                        "schema": {
+                            "type": "number",
+                            "default": 2
+                        },
+                        "example": 2
+                    },
+                    {
+                        "name": "delay",
+                        "in": "query",
+                        "description": "Initial delay in seconds",
+                        "schema": {
+                            "type": "number",
+                            "default": 0
+                        },
+                        "example": 0
+                    },
+                    {
+                        "name": "code",
+                        "in": "query",
+                        "description": "HTTP status code to return",
+                        "schema": {
+                            "type": "integer",
+                            "default": 200
+                        },
+                        "example": 200
+                    }
+                ]
+            }
+        },
+        "/encoding/utf8": {
+            "get": {
+                "tags": [
+                    "HTTPBin Compatibility"
+                ],
+                "summary": "Returns a UTF-8 sample page.",
+                "description": "Returns a page containing UTF-8 data.",
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/response.HTTPError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/etag/{etag}": {
+            "get": {
+                "tags": [
+                    "HTTPBin Compatibility"
+                ],
+                "summary": "Returns an ETag-aware response.",
+                "description": "Responds to If-None-Match with 304 and If-Match with 412 when appropriate.",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/response.HTTPBinRequestResponse"
+                                }
+                            }
+                        }
+                    },
+                    "304": {
+                        "description": "Not Modified"
+                    },
+                    "412": {
+                        "description": "Precondition Failed"
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "etag",
+                        "in": "path",
+                        "description": "ETag value",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "servebin-v1"
+                    }
+                ]
+            }
+        },
+        "/forms/post": {
+            "get": {
+                "tags": [
+                    "HTTPBin Compatibility"
+                ],
+                "summary": "Returns an HTML form.",
+                "description": "Returns an HTML form that submits to /post.",
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/response.HTTPError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/hidden-basic-auth/{user}/{passwd}": {
+            "get": {
+                "tags": [
+                    "HTTPBin Compatibility"
+                ],
+                "summary": "404'd basic auth.",
+                "description": "Returns authenticated user data when the credentials match, otherwise 404s.",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/response.AuthResponse"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "user",
+                        "in": "path",
+                        "description": "Username",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "user"
+                    },
+                    {
+                        "name": "passwd",
+                        "in": "path",
+                        "description": "Password",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "passwd"
+                    }
+                ]
+            }
+        },
+        "/links/{n}": {
+            "get": {
+                "tags": [
+                    "HTTPBin Compatibility"
+                ],
+                "summary": "Returns a page of HTML links.",
+                "description": "Returns a page containing n HTML links.",
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/response.HTTPError"
+                                }
+                            }
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "n",
+                        "in": "path",
+                        "description": "Total number of links",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "example": 5
+                    }
+                ]
+            }
+        },
+        "/links/{n}/{offset}": {
+            "get": {
+                "tags": [
+                    "HTTPBin Compatibility"
+                ],
+                "summary": "Returns a page of HTML links.",
+                "description": "Returns a page containing n HTML links.",
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/response.HTTPError"
+                                }
+                            }
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "n",
+                        "in": "path",
+                        "description": "Total number of links",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "example": 5
+                    },
+                    {
+                        "name": "offset",
+                        "in": "path",
+                        "description": "Link offset to highlight",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "example": 0
+                    }
+                ]
+            }
+        },
+        "/range/{n}": {
+            "get": {
+                "tags": [
+                    "HTTPBin Compatibility"
+                ],
+                "summary": "Returns a range-enabled byte stream.",
+                "description": "Streams n bytes and honors Range requests.",
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/response.HTTPError"
+                                }
+                            }
+                        }
+                    },
+                    "416": {
+                        "description": "Requested Range Not Satisfiable"
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "n",
+                        "in": "path",
+                        "description": "Total number of bytes",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "example": 1024
+                    },
+                    {
+                        "name": "chunk_size",
+                        "in": "query",
+                        "description": "Chunk size in bytes",
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "example": 256
+                    },
+                    {
+                        "name": "duration",
+                        "in": "query",
+                        "description": "Duration in seconds",
+                        "schema": {
+                            "type": "number",
+                            "default": 0
+                        },
+                        "example": 0
+                    },
+                    {
+                        "name": "Range",
+                        "in": "header",
+                        "description": "Byte range request header",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "bytes=0-99"
+                    }
+                ]
+            }
+        },
+        "/redirect-to": {
+            "get": {
+                "tags": [
+                    "HTTPBin Compatibility"
+                ],
+                "summary": "Redirects to the requested URL.",
+                "description": "Redirects to the url query parameter using the optional status_code.",
+                "responses": {
+                    "302": {
+                        "description": "Found"
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/response.HTTPError"
+                                }
+                            }
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "url",
+                        "in": "query",
+                        "description": "Target URL",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "https://servebin.dev/get"
+                    },
+                    {
+                        "name": "status_code",
+                        "in": "query",
+                        "description": "Redirect status code",
+                        "schema": {
+                            "type": "integer",
+                            "default": 302
+                        },
+                        "example": 302
+                    }
+                ]
+            }
+        },
+        "/redirect/{n}": {
+            "get": {
+                "tags": [
+                    "HTTPBin Compatibility"
+                ],
+                "summary": "Redirects multiple times.",
+                "description": "302 redirects n times.",
+                "responses": {
+                    "302": {
+                        "description": "Found"
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/response.HTTPError"
+                                }
+                            }
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "n",
+                        "in": "path",
+                        "description": "Number of redirects",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "example": 2
+                    }
+                ]
+            }
+        },
+        "/relative-redirect/{n}": {
+            "get": {
+                "tags": [
+                    "HTTPBin Compatibility"
+                ],
+                "summary": "Performs relative redirects.",
+                "description": "302 relative redirects n times.",
+                "responses": {
+                    "302": {
+                        "description": "Found"
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/response.HTTPError"
+                                }
+                            }
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "n",
+                        "in": "path",
+                        "description": "Number of redirects",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "example": 2
+                    }
+                ]
+            }
+        },
+        "/response-headers": {
+            "get": {
+                "tags": [
+                    "HTTPBin Compatibility"
+                ],
+                "summary": "Returns arbitrary response headers.",
+                "description": "Returns given response headers.",
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/response.HTTPError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/stream-bytes/{n}": {
+            "get": {
+                "tags": [
+                    "HTTPBin Compatibility"
+                ],
+                "summary": "Streams random bytes.",
+                "description": "Streams n random bytes of binary data in chunked encoding.",
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/response.HTTPError"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/response.HTTPError"
+                                }
+                            }
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "n",
+                        "in": "path",
+                        "description": "Number of bytes",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "example": 16
+                    },
+                    {
+                        "name": "chunk_size",
+                        "in": "query",
+                        "description": "Chunk size in bytes",
+                        "schema": {
+                            "type": "integer",
+                            "default": 10
+                        },
+                        "example": 4
+                    },
+                    {
+                        "name": "seed",
+                        "in": "query",
+                        "description": "Seed for deterministic bytes",
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        },
+                        "example": 123
+                    }
+                ]
+            }
+        },
+        "/stream/{n}": {
+            "get": {
+                "tags": [
+                    "HTTPBin Compatibility"
+                ],
+                "summary": "Streams request data as JSON lines.",
+                "description": "Streams min(n, 100) JSON lines.",
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/response.HTTPError"
+                                }
+                            }
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "n",
+                        "in": "path",
+                        "description": "Number of lines to stream",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "example": 3
+                    }
+                ]
+            }
+        },
+        "/uuid": {
+            "get": {
+                "tags": [
+                    "HTTPBin Compatibility"
+                ],
+                "summary": "Returns a UUID4.",
+                "description": "Returns a randomly generated UUID4.",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/response.UUIDResponse"
+                                }
+                            }
+                        }
                     },
                     "500": {
                         "description": "Internal Server Error",
@@ -1566,6 +2757,74 @@ const docTemplate = `{
                         }
                     }
                 }
+            },
+            "response.AuthResponse": {
+                "type": "object",
+                "properties": {
+                    "authenticated": {
+                        "type": "boolean"
+                    },
+                    "user": {
+                        "type": "string"
+                    }
+                }
+            },
+            "response.CookiesResponse": {
+                "type": "object",
+                "properties": {
+                    "cookies": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "type": "string"
+                        }
+                    }
+                }
+            },
+            "response.HTTPBinRequestResponse": {
+                "type": "object",
+                "properties": {
+                    "args": {
+                        "type": "object",
+                        "additionalProperties": true
+                    },
+                    "data": {
+                        "type": "string"
+                    },
+                    "files": {
+                        "type": "object",
+                        "additionalProperties": true
+                    },
+                    "form": {
+                        "type": "object",
+                        "additionalProperties": true
+                    },
+                    "headers": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "type": "string"
+                        }
+                    },
+                    "json": {
+                        "type": "object"
+                    },
+                    "method": {
+                        "type": "string"
+                    },
+                    "origin": {
+                        "type": "string"
+                    },
+                    "url": {
+                        "type": "string"
+                    }
+                }
+            },
+            "response.UUIDResponse": {
+                "type": "object",
+                "properties": {
+                    "uuid": {
+                        "type": "string"
+                    }
+                }
             }
         }
     },
@@ -1574,7 +2833,7 @@ const docTemplate = `{
 
 // SwaggerInfo holds exported Swagger Info so clients can modify it
 var SwaggerInfo = &swag.Spec{
-	Version:          "v1.2.0",
+	Version:          "v1.3.0",
 	Host:             "servebin.dev",
 	BasePath:         "/",
 	Schemes:          []string{"http", "https"},

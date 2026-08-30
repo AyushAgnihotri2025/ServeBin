@@ -1,4 +1,4 @@
-// Copyright 2024 The ServeBin AUTHORS. All rights reserved.
+// Copyright 2026 The ServeBin AUTHORS. All rights reserved.
 //
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
@@ -12,8 +12,9 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"github.com/gin-gonic/gin"
 	"io/ioutil"
+
+	"github.com/gin-gonic/gin"
 )
 
 // ReturnArguments implements APIService

@@ -1,4 +1,4 @@
-// Copyright 2024 The ServeBin AUTHORS. All rights reserved.
+// Copyright 2026 The ServeBin AUTHORS. All rights reserved.
 //
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
@@ -10,11 +10,12 @@ import (
 	"ServeBin/helper"
 	"compress/flate"
 	"compress/gzip"
+	"net/http"
+	"os"
+
 	"github.com/andybalholm/brotli"
 	"github.com/gin-gonic/gin"
 	"github.com/klauspost/compress/zstd"
-	"net/http"
-	"os"
 )
 
 // GetXML	 	 	ServeBin
